@@ -2,6 +2,7 @@ package com.example.idiomaster;
 
 import android.os.Bundle;
 
+import com.example.idiomaster.modelo.Nivel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.example.idiomaster.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private static Nivel nivelSeleccionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,4 +36,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    public static Nivel getNivelSeleccionado() {
+        return nivelSeleccionado;
+    }
+
+    public static void setNivelSeleccionado(Nivel nivelSeleccionado) {
+        MainActivity.nivelSeleccionado = nivelSeleccionado;
+    }
 }
