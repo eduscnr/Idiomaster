@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "232536227001",
+    "project_id": "idiomaster-b9d5d",
+    "storage_bucket": "idiomaster-b9d5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232536227001:android:59bc49963264da55316f68",
+        "android_client_info": {
+          "package_name": "com.example.idiomaster"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB38pm5P3tYb2IcFobMOmTjT_rjhHez5iA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
