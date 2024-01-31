@@ -5,18 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.minijuegos.TraducePalabras">
+
         <TextView
             android:id="@+id/textView2"
+            style="@style/enunciado_ejercicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="68dp"
-            android:layout_marginEnd="102dp"
-            android:text="Traduce estas palabras"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:layout_marginTop="52dp"
+            android:layout_marginBottom="104dp"
+            android:text="@string/enunciado_primer_ejercicio"
+            app:layout_constraintBottom_toTopOf="@+id/palabraTraducir"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,10 +23,9 @@
             android:id="@+id/palabraTraducir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="184dp"
-            android:layout_marginTop="88dp"
-            android:layout_marginEnd="185dp"
+            android:layout_marginBottom="136dp"
             android:text="Manzana"
+            app:layout_constraintBottom_toTopOf="@+id/palabraUno"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -36,12 +34,10 @@
             android:id="@+id/palabraUno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="161dp"
-            android:layout_marginTop="136dp"
-            android:layout_marginEnd="156dp"
+            android:layout_marginBottom="43dp"
             android:text="Manzana"
+            app:layout_constraintBottom_toTopOf="@+id/palabraDos"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/palabraTraducir" />
 
@@ -49,35 +45,32 @@
             android:id="@+id/palabraDos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="161dp"
-            android:layout_marginTop="43dp"
-            android:layout_marginEnd="156dp"
+            android:layout_marginBottom="36dp"
             android:text="Platano"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/palabraTres"
+            app:layout_constraintStart_toStartOf="@+id/palabraTres"
             app:layout_constraintTop_toBottomOf="@+id/palabraUno" />
 
         <Button
             android:id="@+id/palabraTres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="161dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="156dp"
+            android:layout_marginBottom="83dp"
             android:text="Pera"
+            app:layout_constraintBottom_toTopOf="@+id/validar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/palabraDos" />
 
         <Button
             android:id="@+id/validar"
-            android:layout_width="313dp"
-            android:layout_height="47dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="49dp"
-            android:layout_marginTop="83dp"
             android:layout_marginEnd="49dp"
             android:text="Validar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/palabraTres"/>
+            app:layout_constraintTop_toBottomOf="@+id/palabraTres" />
 </androidx.constraintlayout.widget.ConstraintLayout>
