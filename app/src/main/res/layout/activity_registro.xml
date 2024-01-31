@@ -70,7 +70,7 @@
         />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextTextPassword2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -86,6 +86,7 @@
             android:id="@+id/button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="@color/azul"
             android:text="Registrar" />
     </LinearLayout>
 </LinearLayout>
