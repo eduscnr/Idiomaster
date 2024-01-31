@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.idiomaster.ui.dashboard.DashboardFragment"
+        android:name="com.example.idiomaster.ui.dashboard.AJugar"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_jugar" />
 
     <fragment
         android:id="@+id/navigation_notifications"

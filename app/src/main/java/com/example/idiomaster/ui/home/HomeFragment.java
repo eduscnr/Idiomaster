@@ -1,34 +1,27 @@
 package com.example.idiomaster.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.FragmentHomeBinding;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.adaptadores.AdaptadorNivel;
-import com.example.idiomaster.databinding.FragmentHomeBinding;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
+import com.example.idiomaster.ui.minijuegos.TraducePalabras;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -98,5 +91,8 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener{
     @Override
     public void onClickCardView(int posicion) {
         System.out.println(niveles.get(posicion));
+        MainActivity.setNivelSeleccionado(niveles.get(posicion));
+        Intent traducePalabras = new Intent(requireContext(), TraducePalabras.class);
+        requireContext().startActivity(traducePalabras);
     }
 }
