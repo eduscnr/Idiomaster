@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.idiomaster.MainActivity;
+import com.example.idiomaster.registrar.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.FragmentHomeBinding;
 

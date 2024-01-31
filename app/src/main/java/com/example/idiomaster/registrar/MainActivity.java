@@ -1,7 +1,8 @@
-package com.example.idiomaster;
+package com.example.idiomaster.registrar;
 
 import android.os.Bundle;
 
+import com.example.idiomaster.R;
 import com.example.idiomaster.modelo.Nivel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
