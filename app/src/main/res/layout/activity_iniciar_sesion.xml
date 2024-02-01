@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Registro"
+    tools:context=".iniciar.IniciarSesion"
     android:orientation="vertical">
 
     <TextView
@@ -72,29 +72,6 @@
         android:ems="10"
         android:inputType="textPassword" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="15dp"
-        android:text="Repite la contraseña"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        />
-
-    <EditText
-        android:id="@+id/editTextPasswordRep"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="Repetir contraseña"
-        android:drawableLeft="@drawable/drawable_icono_email"
-        android:paddingLeft="10dp"
-        android:background="@drawable/card_view"
-        android:ems="10"
-        android:drawablePadding="8dp"
-        android:inputType="textPassword" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -107,6 +84,18 @@
             android:layout_width="150dp"
             android:background="@drawable/card_view"
             android:layout_height="wrap_content"
-            android:text="Registrar" />
+            android:text="Iniciar sesion" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/crearCuenta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:paddingLeft="15dp"
+        android:gravity="center"
+        android:text="No tienes cuenta, create un aquí"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        />
+
 </LinearLayout>
