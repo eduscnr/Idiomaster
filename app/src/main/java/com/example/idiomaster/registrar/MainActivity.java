@@ -12,7 +12,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityMainBinding;
+import com.example.idiomaster.modelo.Nivel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 

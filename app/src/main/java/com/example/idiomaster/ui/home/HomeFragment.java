@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.example.idiomaster.registrar.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.FragmentHomeBinding;
 
@@ -19,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.idiomaster.adaptadores.AdaptadorNivel;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
+import com.example.idiomaster.registrar.MainActivity;
 import com.example.idiomaster.ui.minijuegos.TraducePalabras;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,7 +71,6 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener{
                         niveles.add(n);
                     }
                 }
-                System.out.println("HOla");
                 adaptadorNivel = new AdaptadorNivel(niveles, listener);
                 System.out.println(niveles);
                 r.setAdapter(adaptadorNivel);
