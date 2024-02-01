@@ -74,7 +74,6 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener{
                         niveles.add(n);
                     }
                 }
-                System.out.println("HOla");
                 adaptadorNivel = new AdaptadorNivel(niveles, listener);
                 System.out.println(niveles);
                 r.setAdapter(adaptadorNivel);
