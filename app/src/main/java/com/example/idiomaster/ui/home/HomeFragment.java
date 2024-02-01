@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.idiomaster.adaptadores.AdaptadorNivel;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
-import com.example.idiomaster.registrar.MainActivity;
+import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.ui.minijuegos.TraducePalabras;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.idiomaster.databinding.ActivityTraducePalabrasBinding;
-import com.example.idiomaster.registrar.MainActivity;
+import com.example.idiomaster.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
