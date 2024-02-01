@@ -1,0 +1,4 @@
+<!-- res/drawable/drawable_left_custom.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/icons8_candado_2_50" android:width="24dp" android:height="24dp"/>
+</layer-list>
