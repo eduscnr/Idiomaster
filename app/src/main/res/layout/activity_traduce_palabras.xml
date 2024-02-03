@@ -20,12 +20,14 @@
             android:id="@+id/palabraTraducir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:text="Manzana"
             app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.33" />
 
         <Button
             android:id="@+id/validar"
@@ -41,14 +43,14 @@
 
         <RelativeLayout
             android:id="@+id/relativeLayout2"
-            android:layout_width="345dp"
-            android:layout_height="437dp"
+            android:layout_width="280dp"
+            android:layout_height="329dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.535">
+            app:layout_constraintVertical_bias="0.708">
 
                 <androidx.gridlayout.widget.GridLayout
                     android:id="@+id/gridJugar"
@@ -57,4 +59,17 @@
 
                 </androidx.gridlayout.widget.GridLayout>
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textviewCorrectoIncorrecto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.279" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
