@@ -2,6 +2,7 @@ package com.example.idiomaster;
 
 import android.os.Bundle;
 
+import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Nivel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private static Nivel nivelSeleccionado;
+    private static String idiomaSeleccionado = IniciarSesion.getInicioSesionUsuario().getIdioma();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setNivelSeleccionado(Nivel nivelSeleccionado) {
         MainActivity.nivelSeleccionado = nivelSeleccionado;
+    }
+
+    public static String getIdiomaSeleccionado() {
+        return idiomaSeleccionado;
+    }
+
+    public static void setIdiomaSeleccionado(String idiomaSeleccionado) {
+        MainActivity.idiomaSeleccionado = idiomaSeleccionado;
     }
 }

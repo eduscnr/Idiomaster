@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
+import com.example.idiomaster.database.DatabaseSqlite;
 import com.example.idiomaster.databinding.ActivityIniciarSesionBinding;
+import com.example.idiomaster.modelo.Usuario;
 import com.example.idiomaster.registrar.Registro;
+import com.example.idiomaster.repositorio.DaoImplement;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,6 +37,7 @@ public class IniciarSesion extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ActivityIniciarSesionBinding binding;
     private GoogleSignInClient mGoogleSignInClient;
+    private static Usuario inicioSesionUsuario;
     private GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("232536227001-8vodv266emdtju434ksdpqhs2gj8eldu.apps.googleusercontent.com")
             .requestEmail()
@@ -43,6 +47,8 @@ public class IniciarSesion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityIniciarSesionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        DatabaseSqlite databaseSqlite = new DatabaseSqlite(this);
+        databaseSqlite.getReadableDatabase();
         firebaseAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         binding.iniciarSesion.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +63,8 @@ public class IniciarSesion extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Inicio de sesión exitoso
                                 Toast.makeText(IniciarSesion.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                                DaoImplement daoImplement = new DaoImplement(IniciarSesion.this);
+                                inicioSesionUsuario = daoImplement.iniciarSesionUsuario(email);
                                 Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
                                 startActivity(intent);
                                 finish(); // Esto evita que el usuario regrese a la pantalla de inicio de sesión presionando el botón "Atrás"
@@ -126,5 +134,13 @@ public class IniciarSesion extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public static Usuario getInicioSesionUsuario() {
+        return inicioSesionUsuario;
+    }
+
+    public static void setInicioSesionUsuario(Usuario inicioSesionUsuario) {
+        IniciarSesion.inicioSesionUsuario = inicioSesionUsuario;
     }
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.adaptadores.AdaptadorNivel;
+import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
 import com.example.idiomaster.MainActivity;
@@ -47,6 +48,7 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener{
         AdaptadorNivel adaptadorNivel = new AdaptadorNivel(niveles, this);
         r.setHasFixedSize(true);
         r.setLayoutManager(new LinearLayoutManager(requireContext()));
+        System.out.println(IniciarSesion.getInicioSesionUsuario());
         return root;
     }
 
@@ -59,7 +61,7 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener{
     public List<Nivel> obtenerNiveles(){
         List<Nivel> niveles = new ArrayList<>();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("minijuegos/es/mundos");
+        DatabaseReference databaseReference = firebaseDatabase.getReference("minijuegos/"+IniciarSesion.getInicioSesionUsuario().getIdioma()+"/mundos");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

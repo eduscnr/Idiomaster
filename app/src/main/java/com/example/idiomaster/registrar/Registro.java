@@ -12,6 +12,7 @@ import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityRegistroBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.repositorio.DaoImplement;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -43,6 +44,8 @@ public class Registro extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // El usuario se ha creado exitosamente en Firebase Authentication
                                         Toast.makeText(Registro.this, "Registro realizado", Toast.LENGTH_SHORT).show();
+                                        DaoImplement daoImplement = new DaoImplement(Registro.this);
+                                        daoImplement.registrarUsuario(ema);
                                         Intent i = new Intent(Registro.this, IniciarSesion.class);
                                         startActivity(i);
                                         finish();

@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseSqlite  extends SQLiteOpenHelper {
     private static final String NOMBRE_BASE_DE_DATOS = "DatosUsuarios.db";
-    private static final int VERSION_BASE_DE_DATOS = 1;
+    private static final int VERSION_BASE_DE_DATOS = 2;
     public DatabaseSqlite(Context context) {
         super(context, NOMBRE_BASE_DE_DATOS, null, VERSION_BASE_DE_DATOS);
     }
@@ -22,7 +22,7 @@ public class DatabaseSqlite  extends SQLiteOpenHelper {
                 "progreso_mundo INTEGER," +
                 "progreso_nivel INTEGER, " +
                 "idioma TEXT, " +
-                " FOREIGN KEY (usuario_id) REFERENCES Usuarios(id))");
+                "FOREIGN KEY (usuario_id) REFERENCES Usuarios(id))");
     }
 
     @Override

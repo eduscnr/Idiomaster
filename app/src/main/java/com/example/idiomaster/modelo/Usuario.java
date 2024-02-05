@@ -44,4 +44,14 @@ public class Usuario {
     public void setIdioma(String idioma) {
         this.idioma = idioma;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "email='" + email + '\'' +
+                ", progresoMundo=" + progresoMundo +
+                ", progresoNivel=" + progresoNivel +
+                ", idioma='" + idioma + '\'' +
+                '}';
+    }
 }
