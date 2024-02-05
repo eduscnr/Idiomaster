@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityTraducePalabrasBinding;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -28,6 +28,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
     private int indiceActual = 0;
     private String respuestPulsada;
     private TextView tvCorrectoInCorrecto;
+    private List<String> opcionesBarajadas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +41,12 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
         opciones = new ArrayList<>();
         binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
 
-        for (int i = 0; i <= 10; i++) {
+        int palabrasSize = MainActivity.getNivelSeleccionado().getPalabras().size();
+        for (int i = 0; i < palabrasSize; i++) {
             opciones.add(MainActivity.getNivelSeleccionado().getPalabras().get(i));
         }
-        aniadeHijos(10);
+
+        aniadeHijos(2);
         recorrer();
 
         btnvalidar = binding.validar;
@@ -51,23 +54,36 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 if (btnvalidar.isEnabled()) {
-                    validarRespuesta();
+                    validarRespuesta();;
+                    aniadeHijos(2);
                 }
             }
         });
     }
 
     public void aniadeHijos(int k) {
-        gridLayout.setColumnCount(3);
-        gridLayout.setRowCount(1);
+        opcionesBarajadas = new ArrayList<>(opciones);
+        Collections.shuffle(opcionesBarajadas);
         Button b;
+        int indiceRespuestaCorrecta = new Random().nextInt(3);
         for (int i = 0; i <= k; i++) {
             b = new Button(binding.getRoot().getContext());
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.setMargins(8, 8, 8, 8); // Margen izquierdo, superior, derecho e inferior
             b.setLayoutParams(params);
             b.setId(View.generateViewId());
-            b.setText(opciones.get(i));
+            if (i == indiceRespuestaCorrecta) {
+                // Este es el botón que contendrá la respuesta correcta
+                b.setText(opciones.get(indiceActual));
+            } else {
+                // Estos son los otros botones con respuestas incorrectas aleatorias
+                int indiceOpcionIncorrecta = new Random().nextInt(opcionesBarajadas.size());
+                while (indiceOpcionIncorrecta == indiceActual) {
+                    // Asegura que la opción incorrecta no sea la respuesta correcta
+                    indiceOpcionIncorrecta = new Random().nextInt(opcionesBarajadas.size());
+                }
+                b.setText(opcionesBarajadas.get(indiceOpcionIncorrecta));
+            }
             b.setTextColor(Color.BLACK);
             b.setOnClickListener(this);
             gridLayout.addView(b, i);
@@ -96,21 +112,26 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
     }
 
     public void validarRespuesta(){
-        if (respuestPulsada.equalsIgnoreCase(binding.palabraTraducir.getText().toString())) {
-            //Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show();
-            tvCorrectoInCorrecto.setText("CORRECTO");
-            tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.teal_700));
-            indiceActual++;
-            if (indiceActual < MainActivity.getNivelSeleccionado().getPalabras().size()) {
+        //Comprobarsi es correcto y si no
+        if(respuestPulsada != null){
+            if (respuestPulsada.equalsIgnoreCase(binding.palabraTraducir.getText().toString())) {
+                //Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show();
+                tvCorrectoInCorrecto.setText("CORRECTO");
+                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.teal_700));
+                indiceActual++;
+            } else {
+                //Toast.makeText(this, "Incorrecto", Toast.LENGTH_SHORT).show();
+                tvCorrectoInCorrecto.setText("INCORRECTO");
+                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.purple_200));
+                indiceActual++;
+            }
+            //Aumentar el indice para que pase a la siguiente palabra independientemente si se equivoca o acierta
+            if (indiceActual <= MainActivity.getNivelSeleccionado().getPalabras().size()) {
                 binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
             } else {
-               // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
                 finish();
             }
-        } else {
-            //Toast.makeText(this, "Incorrecto", Toast.LENGTH_SHORT).show();
-            tvCorrectoInCorrecto.setText("INCORRECTO");
-            tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.purple_200));
         }
     }
 }
