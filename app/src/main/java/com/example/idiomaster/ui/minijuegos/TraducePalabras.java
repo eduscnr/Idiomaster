@@ -72,7 +72,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
             params.setMargins(8, 8, 8, 8); // Margen izquierdo, superior, derecho e inferior
             b.setLayoutParams(params);
             b.setId(View.generateViewId());
-            if (i == indiceRespuestaCorrecta) {
+            if (i == indiceRespuestaCorrecta && indiceActual < MainActivity.getNivelSeleccionado().getPalabras().size()) {
                 // Este es el botón que contendrá la respuesta correcta
                 b.setText(opciones.get(indiceActual));
             } else {
@@ -126,7 +126,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 indiceActual++;
             }
             //Aumentar el indice para que pase a la siguiente palabra independientemente si se equivoca o acierta
-            if (indiceActual <= MainActivity.getNivelSeleccionado().getPalabras().size()) {
+            if (indiceActual <= MainActivity.getNivelSeleccionado().getPalabras().size() && indiceActual < MainActivity.getNivelSeleccionado().getPalabras().size()) {
                 binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
             } else {
                 // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
