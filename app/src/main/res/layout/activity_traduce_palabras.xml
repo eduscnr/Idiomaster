@@ -5,72 +5,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.minijuegos.TraducePalabras">
-
         <TextView
             android:id="@+id/textView2"
-            style="@style/enunciado_ejercicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:layout_marginBottom="104dp"
-            android:text="@string/enunciado_primer_ejercicio"
-            app:layout_constraintBottom_toTopOf="@+id/palabraTraducir"
+            android:text="Traduce estas palabras:"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.025" />
 
         <TextView
             android:id="@+id/palabraTraducir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="136dp"
+            android:layout_marginTop="30dp"
             android:text="Manzana"
-            app:layout_constraintBottom_toTopOf="@+id/palabraUno"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <Button
-            android:id="@+id/palabraUno"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="43dp"
-            android:text="Manzana"
-            app:layout_constraintBottom_toTopOf="@+id/palabraDos"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/palabraTraducir" />
-
-        <Button
-            android:id="@+id/palabraDos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:text="Platano"
-            app:layout_constraintBottom_toTopOf="@+id/palabraTres"
-            app:layout_constraintStart_toStartOf="@+id/palabraTres"
-            app:layout_constraintTop_toBottomOf="@+id/palabraUno" />
-
-        <Button
-            android:id="@+id/palabraTres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="83dp"
-            android:text="Pera"
-            app:layout_constraintBottom_toTopOf="@+id/validar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/palabraDos" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.33" />
 
         <Button
             android:id="@+id/validar"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="323dp"
+            android:layout_height="63dp"
             android:layout_marginStart="49dp"
             android:layout_marginEnd="49dp"
+            android:layout_marginBottom="24dp"
             android:text="Validar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="280dp"
+            android:layout_height="329dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/palabraTres" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.708">
+
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/gridJugar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.gridlayout.widget.GridLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textviewCorrectoIncorrecto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.279" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,25 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.notifications.NotificationsFragment">
 
-    <Button
-        android:id="@+id/guardarCambios"
-        android:layout_width="252dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="157dp"
-        android:layout_marginTop="628dp"
-        android:layout_marginEnd="160dp"
-        android:text="Guardar cambios"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="115dp"
         android:layout_height="99dp"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="148dp"
         android:src="@drawable/icons8_usuario_64"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,47 +19,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="205dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="115dp"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.926"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="336dp"
+        android:layout_marginEnd="86dp"
+        android:text="Cambiar idioma"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintHorizontal_bias="0.318"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correoElectronico" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/guardarCambios"
+        android:layout_width="252dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="428dp"
+        android:layout_marginEnd="160dp"
+        android:text="Guardar cambios"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/correoElectronico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="179dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="175dp"
         android:text="usuario@gmail.com"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="17dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="86dp"
-        android:text="Cambiar idioma"
-        android:textStyle="italic"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
-        app:layout_constraintHorizontal_bias="0.317"
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="205dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/correoElectronico" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

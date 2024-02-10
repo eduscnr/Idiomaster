@@ -18,6 +18,7 @@ import com.example.idiomaster.databinding.ActivityIniciarSesionBinding;
 import com.example.idiomaster.modelo.Usuario;
 import com.example.idiomaster.registrar.Registro;
 import com.example.idiomaster.repositorio.DaoImplement;
+import com.example.idiomaster.repositorio.IDao;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -42,6 +43,7 @@ public class IniciarSesion extends AppCompatActivity {
             .requestIdToken("232536227001-8vodv266emdtju434ksdpqhs2gj8eldu.apps.googleusercontent.com")
             .requestEmail()
             .build();
+    private IDao daoImplement;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,7 @@ public class IniciarSesion extends AppCompatActivity {
         databaseSqlite.getReadableDatabase();
         firebaseAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        daoImplement = new DaoImplement(IniciarSesion.this);
         binding.iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,11 +66,13 @@ public class IniciarSesion extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Inicio de sesión exitoso
                                 Toast.makeText(IniciarSesion.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                                DaoImplement daoImplement = new DaoImplement(IniciarSesion.this);
-                                inicioSesionUsuario = daoImplement.iniciarSesionUsuario(email);
-                                Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
-                                startActivity(intent);
-                                finish(); // Esto evita que el usuario regrese a la pantalla de inicio de sesión presionando el botón "Atrás"
+                                if(daoImplement.buscarUsuario(email)){
+                                    inicioSesionUsuario = daoImplement.iniciarSesionUsuario(email);
+                                    Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish(); // Esto evita que el usuario regrese a la pantalla de inicio de sesión presionando el botón "Atrás"
+                                }
+                                Toast.makeText(IniciarSesion.this, "El usuario existe pero no en la base de datos, lo siento", Toast.LENGTH_SHORT).show();
                             } else {
                                 // Error al iniciar sesión
                                 Toast.makeText(IniciarSesion.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
@@ -101,16 +106,22 @@ public class IniciarSesion extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                if(daoImplement.buscarUsuario(account.getEmail())){
+                    inicioSesionUsuario = daoImplement.iniciarSesionUsuario(account.getEmail());
+                }else{
+                    Toast.makeText(IniciarSesion.this, "Vas a perder todo el progreso de la cuenta si tenias una", Toast.LENGTH_SHORT).show();
+                    daoImplement.registrarUsuario(account.getEmail());
+                    inicioSesionUsuario = daoImplement.iniciarSesionUsuario(account.getEmail());
+                }
+                //Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
                 //Para lanzar otra actividad
                 Intent i = new Intent(IniciarSesion.this, MainActivity.class);
                 startActivity(i);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
+                //Log.w(TAG, "Google sign in failed", e);
                 // [START_EXCLUDE]
                 Toast.makeText(IniciarSesion.this, "Error", Toast.LENGTH_SHORT).show();
                 // [END_EXCLUDE]

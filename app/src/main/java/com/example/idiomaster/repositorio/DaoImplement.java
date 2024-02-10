@@ -77,4 +77,34 @@ public class DaoImplement implements IDao{
         }
         return null;
     }
+
+    @Override
+    public boolean actualizarProgreso(String emailUsuario, String idioma, int progresoMundo, int progresoNivel) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        long idUsuario = obtenerIdUsuario(db, emailUsuario);
+        if(idUsuario == -1){
+            return false;
+        }
+        ContentValues valores = new ContentValues();
+        valores.put("progreso_mundo", progresoMundo);
+        valores.put("progreso_nivel", progresoNivel);
+        int filasActualizadas = db.update("ProgresoUsuario", valores, "usuario_id = ? and idioma = ?",
+                new String[]{String.valueOf(idUsuario), idioma});
+        return filasActualizadas>0;
+    }
+
+    @Override
+    public boolean buscarUsuario(String email) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String select = "SELECT COUNT(*) FROM Usuario WHERE email = ?";
+        String []paramentros = {email};
+        Cursor cursor = db.rawQuery(select, paramentros);
+        int usuarioExistente = 0;
+        if(cursor != null){
+            cursor.moveToFirst();
+            usuarioExistente = cursor.getInt(0);
+            cursor.close();
+        }
+        return usuarioExistente>0;
+    }
 }

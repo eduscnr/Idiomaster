@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewNivel"
+        android:id="@+id/cardViewMundo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -17,11 +17,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/cv_txt_NombreNivel"
+                android:id="@+id/cv_txt_NombreMundo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Nivel 1" />
+                android:text="Madrid" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -22,12 +22,14 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Registro extends AppCompatActivity {
     private ActivityRegistroBinding binding;
     private FirebaseAuth firebaseAuth;
+    private DaoImplement daoImplement;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegistroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         firebaseAuth = FirebaseAuth.getInstance();
+        daoImplement = new DaoImplement(Registro.this);
         binding.registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,12 +45,16 @@ public class Registro extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // El usuario se ha creado exitosamente en Firebase Authentication
-                                        Toast.makeText(Registro.this, "Registro realizado", Toast.LENGTH_SHORT).show();
-                                        DaoImplement daoImplement = new DaoImplement(Registro.this);
-                                        daoImplement.registrarUsuario(ema);
-                                        Intent i = new Intent(Registro.this, IniciarSesion.class);
-                                        startActivity(i);
-                                        finish();
+                                        if(daoImplement.buscarUsuario(ema)){
+                                            System.out.println("existe");
+                                            Toast.makeText(Registro.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(Registro.this, "Registro realizado", Toast.LENGTH_SHORT).show();
+                                            daoImplement.registrarUsuario(ema);
+                                            Intent i = new Intent(Registro.this, IniciarSesion.class);
+                                            startActivity(i);
+                                            finish();
+                                        }
                                     } else {
                                         // Error al crear el usuario
                                         Toast.makeText(Registro.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();

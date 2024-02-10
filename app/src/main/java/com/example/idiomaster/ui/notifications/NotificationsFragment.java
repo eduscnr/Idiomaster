@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.example.idiomaster.R;
 import com.example.idiomaster.adaptadores.AdaptadorIdiomas;
 import com.example.idiomaster.databinding.FragmentNotificationsBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.modelo.Usuario;
 import com.example.idiomaster.repositorio.DaoImplement;
 import com.example.idiomaster.repositorio.IDao;
 
@@ -24,6 +26,8 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
 
     private FragmentNotificationsBinding binding;
     private String[] idiomas= {"Español", "Italiano", "Ingles"};
+    private String idioma;
+    private IDao doa;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +40,15 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
         AdaptadorIdiomas adaptadorIdiomas = new AdaptadorIdiomas(requireContext(), R.layout.item_idioma, idiomas);
         spinner.setAdapter(adaptadorIdiomas);
         spinner.setOnItemSelectedListener(this);
+        doa = new DaoImplement(requireContext());
+        binding.guardarCambios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Usuario usuario = IniciarSesion.getInicioSesionUsuario();
+                doa.actualizarProgreso(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(), usuario.getProgresoNivel());
+                IniciarSesion.setInicioSesionUsuario(doa.cambiarIdioma(IniciarSesion.getInicioSesionUsuario().getEmail(), idioma));
+            }
+        });
         return root;
     }
 
@@ -48,16 +61,15 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if(binding.spinner.getId() == adapterView.getId()){
-            IDao dao = new DaoImplement(requireContext());
             switch (i) {
                 case 0:
-                    IniciarSesion.setInicioSesionUsuario(dao.cambiarIdioma(IniciarSesion.getInicioSesionUsuario().getEmail(), "es"));
+                    idioma = "es";
                     break;
                 case 1:
-                    IniciarSesion.setInicioSesionUsuario(dao.cambiarIdioma(IniciarSesion.getInicioSesionUsuario().getEmail(), "it"));
+                    idioma = "it";
                     break;
                 case 2:
-                    IniciarSesion.setInicioSesionUsuario(dao.cambiarIdioma(IniciarSesion.getInicioSesionUsuario().getEmail(), "en"));
+                    idioma = "en";
                     break;
             }
         }
