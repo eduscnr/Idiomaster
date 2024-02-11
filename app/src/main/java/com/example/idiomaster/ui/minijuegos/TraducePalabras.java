@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.idiomaster.databinding.ActivityTraducePalabrasBinding;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class TraducePalabras extends AppCompatActivity implements View.OnClickListener {
@@ -59,6 +61,22 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 }
             }
         });
+
+        // Obtén el idioma del sistema
+        Configuration config = getResources().getConfiguration();
+        Locale systemLocale = config.getLocales().get(0);
+
+        // Obtén el código de idioma del sistema
+        String languageCode = systemLocale.getLanguage();
+        TextView textView = findViewById(R.id.palabraTraducir);
+
+        if (languageCode.equals("es")) {
+            textView.setText("manzana");
+        } else if (languageCode.equals("en")) {
+            textView.setText("apple");
+        } else if (languageCode.equals("it")) {
+            textView.setText("mela");
+        }
     }
 
     public void aniadeHijos(int k) {
@@ -112,7 +130,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
     }
 
     public void validarRespuesta(){
-        //Comprobarsi es correcto y si no
+        //Comprobar si es correcto y si no
         if(respuestPulsada != null){
             if (respuestPulsada.equalsIgnoreCase(binding.palabraTraducir.getText().toString())) {
                 //Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show();

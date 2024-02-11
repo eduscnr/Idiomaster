@@ -9,13 +9,17 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a73676cb-daf4-4d0d-9f5b-e1db8f4d7f5a" name="Changes" comment="" />
+    <list default="true" id="a73676cb-daf4-4d0d-9f5b-e1db8f4d7f5a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/idiomaster/ui/minijuegos/TraducePalabras.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/idiomaster/ui/minijuegos/TraducePalabras.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Eduardo\.android\avd\Pixel_4_API_34.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Moldo\.android\avd\Pixel_4_API_33.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -120,7 +124,7 @@
     &quot;android-custom-viewC:/Users/Moldo/.gradle/caches/modules-2/files-2.1/androidx.gridlayout/gridlayout/1.0.0/44dc9d588fcd92b642a06fcc2aa8b7b9645de52c/gridlayout-1.0.0-sources.jar!/androidx/gridlayout/widget/GridLayout.java_SELECTED&quot;: &quot;GridLayout&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/DAM2/AndroidStudio/MaestroMultiplicarMarcos&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/media/usumaniana/My Passport/DAM2/AndroidStudio/ProyectoMarcosFirebase&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
