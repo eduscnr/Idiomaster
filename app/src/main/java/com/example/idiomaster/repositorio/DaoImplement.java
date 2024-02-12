@@ -67,7 +67,6 @@ public class DaoImplement implements IDao{
         Cursor cursor = db.rawQuery("SELECT * FROM ProgresoUsuario WHERE usuario_id = ? AND idioma = ?",
                 new String[]{String.valueOf(obtenerIdUsuario(db, emailUsuario)), idiomaCambiar});
         if (cursor.moveToFirst()) {
-            System.out.println("paso por aquí");
             return new Usuario(
                     emailUsuario,
                     cursor.getInt(cursor.getColumnIndex("progreso_mundo")),

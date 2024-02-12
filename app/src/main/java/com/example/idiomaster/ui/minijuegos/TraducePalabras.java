@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,14 +15,17 @@ import android.widget.Toast;
 import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityTraducePalabrasBinding;
+import com.example.idiomaster.dialogo.FinalizarJuego;
 import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.victoriaderrota.Derrota;
+import com.example.idiomaster.victoriaderrota.Victoria;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class TraducePalabras extends AppCompatActivity implements View.OnClickListener {
+public class TraducePalabras extends AppCompatActivity implements View.OnClickListener, FinalizarJuego.IDialogoLisenerOnClick{
     private ActivityTraducePalabrasBinding binding;
     private List<String> opciones;
     private GridLayout gridLayout;
@@ -30,6 +34,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
     private String respuestPulsada;
     private TextView tvCorrectoInCorrecto;
     private List<String> opcionesBarajadas;
+    private int fallos = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +43,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
 
         tvCorrectoInCorrecto = binding.textviewCorrectoIncorrecto;
         gridLayout = binding.gridJugar;
-
+        System.out.println("Niveles totales: "+MainActivity.getMundoActual().getNiveles().size());
         opciones = new ArrayList<>();
         binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
 
@@ -58,6 +63,13 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                     validarRespuesta();;
                     aniadeHijos(2);
                 }
+            }
+        });
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FinalizarJuego finalizarJuego = new FinalizarJuego();
+                finalizarJuego.show(getSupportFragmentManager(), "Parar");
             }
         });
     }
@@ -125,15 +137,31 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 tvCorrectoInCorrecto.setText("INCORRECTO");
                 tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.purple_200));
                 indiceActual++;
+                fallos++;
             }
             //Aumentar el indice para que pase a la siguiente palabra independientemente si se equivoca o acierta
             if (indiceActual <= MainActivity.getNivelSeleccionado().getPalabras().size() && indiceActual < MainActivity.getNivelSeleccionado().getPalabras().size()) {
                 binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
             } else {
                 // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
-                IniciarSesion.getInicioSesionUsuario().setProgresoNivel(IniciarSesion.getInicioSesionUsuario().getProgresoNivel()+1);
+                if(fallos>3){
+                    Intent derrotaIntent = new Intent(this, Derrota.class);
+                    startActivity(derrotaIntent);
+                }else{
+                    Intent victoriaIntent = new Intent(this, Victoria.class);
+                    startActivity(victoriaIntent);
+                    IniciarSesion.getInicioSesionUsuario().setProgresoNivel(IniciarSesion.getInicioSesionUsuario().getProgresoNivel()+1);
+                    if(MainActivity.getNivelSeleccionado().getId() == MainActivity.getMundoActual().getNiveles().get(MainActivity.getMundoActual().getNiveles().size()-1).getId()){
+                        IniciarSesion.getInicioSesionUsuario().setProgresoMundo(IniciarSesion.getInicioSesionUsuario().getProgresoMundo()+1);
+                    }
+                }
                 finish();
             }
         }
+    }
+
+    @Override
+    public void onBotonDialogoClic() {
+        finish();
     }
 }

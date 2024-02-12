@@ -23,6 +23,7 @@ import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
 import com.example.idiomaster.ui.minijuegos.TraducePalabras;
+import com.example.idiomaster.victoriaderrota.Victoria;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,6 +65,15 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
         recyclerViewMundos.setLayoutManager(new LinearLayoutManager(requireContext()));
         AdaptadorMundo adaptadorMundo = new AdaptadorMundo(mundos, this::onClickCardViewMundo);
         recyclerViewMundos.setAdapter(adaptadorMundo);
+        binding.salirButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerViewMundos.setVisibility(View.VISIBLE);
+                recyclerViewNiveles.setVisibility(View.INVISIBLE);
+                binding.salirButton.setVisibility(View.INVISIBLE);
+            }
+        });
+        binding.salirButton.setVisibility(View.INVISIBLE);
         return root;
     }
 
@@ -123,7 +133,6 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
     @Override
     public void onClickCardView(int posicion) {
         MainActivity.setNivelSeleccionado(niveles.get(posicion));
-        System.out.println(IniciarSesion.getInicioSesionUsuario().getProgresoNivel());
         if(niveles.get(posicion).getId()==IniciarSesion.getInicioSesionUsuario().getProgresoNivel()){
             Intent traducePalabras = new Intent(requireContext(), TraducePalabras.class);
             requireContext().startActivity(traducePalabras);
@@ -135,13 +144,14 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
     }
     public void onClickCardViewMundo(int posicion){
         Mundo mundoSeleccionado = mundos.get(posicion);
-        System.out.println(mundoSeleccionado.getId());
-        System.out.println(IniciarSesion.getInicioSesionUsuario().getProgresoMundo());
+        MainActivity.setMundoActual(mundoSeleccionado);
         if(mundoSeleccionado.getId()<= IniciarSesion.getInicioSesionUsuario().getProgresoMundo()){
             List<Nivel> nivelesDeUnMundo = mundoSeleccionado.getNiveles();
+            niveles = nivelesDeUnMundo;
             AdaptadorNivel adaptadorNivel = new AdaptadorNivel(nivelesDeUnMundo, this::onClickCardView);
             recyclerViewMundos.setVisibility(View.INVISIBLE);
             recyclerViewNiveles.setVisibility(View.VISIBLE);
+            binding.salirButton.setVisibility(View.VISIBLE);
             recyclerViewNiveles.setAdapter(adaptadorNivel);
         }else{
             Toast.makeText(requireContext(), "No tienes el mundo desbloqueado", Toast.LENGTH_SHORT).show();
