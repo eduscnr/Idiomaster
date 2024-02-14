@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Registro"
+    tools:context=".registrar.Registro"
     android:orientation="vertical">
 
     <TextView
@@ -35,7 +35,7 @@
         />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="5dp"
@@ -59,7 +59,7 @@
         />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Contraseña"
@@ -83,7 +83,7 @@
         />
 
     <EditText
-        android:id="@+id/editTextPasswordRep"
+        android:id="@+id/passwordRepet"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="5dp"
@@ -103,7 +103,7 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/registrar"
             android:layout_width="150dp"
             android:background="@drawable/card_view"
             android:layout_height="wrap_content"

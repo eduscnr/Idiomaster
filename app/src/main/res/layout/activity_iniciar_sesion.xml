@@ -35,7 +35,7 @@
         />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="5dp"
@@ -59,7 +59,7 @@
         />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Contraseña"
@@ -80,22 +80,32 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/iniciarSesion"
             android:layout_width="150dp"
             android:background="@drawable/card_view"
             android:layout_height="wrap_content"
             android:text="Iniciar sesion" />
     </LinearLayout>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signInButton"
+        android:layout_width="217dp"
+        android:layout_gravity="center"
+        android:layout_height="67dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+    </com.google.android.gms.common.SignInButton>
+
     <TextView
         android:id="@+id/crearCuenta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="12dp"
         android:paddingLeft="15dp"
         android:gravity="center"
         android:text="No tienes cuenta, create un aquí"
         android:textColor="@color/black"
         android:textStyle="italic"
         />
-
 </LinearLayout>
