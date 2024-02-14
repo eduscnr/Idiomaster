@@ -11,7 +11,8 @@
         android:layout_height="150dp"
         android:layout_margin="15dp"
         app:cardCornerRadius="30dp"
-        app:cardMaxElevation="20dp">
+        app:cardMaxElevation="20dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrainMundo"
@@ -25,9 +26,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Madrid"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textStyle="bold"
+                style="@style/nombre_ciudad"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

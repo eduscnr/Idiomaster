@@ -8,15 +8,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNiveles"
-        android:layout_width="408dp"
-        android:layout_height="395dp"
+        android:layout_width="402dp"
+        android:layout_height="391dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.394" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMundos"

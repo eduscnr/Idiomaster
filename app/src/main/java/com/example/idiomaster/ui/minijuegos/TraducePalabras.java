@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -65,7 +67,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 }
             }
         });
-        binding.button.setOnClickListener(new View.OnClickListener() {
+        binding.botonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FinalizarJuego finalizarJuego = new FinalizarJuego();
@@ -74,6 +76,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+    @SuppressLint("ResourceAsColor")
     public void aniadeHijos(int k) {
         opcionesBarajadas = new ArrayList<>(opciones);
         Collections.shuffle(opcionesBarajadas);
@@ -97,7 +100,8 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 }
                 b.setText(opcionesBarajadas.get(indiceOpcionIncorrecta));
             }
-            b.setTextColor(Color.BLACK);
+            b.setTextColor(Color.WHITE);
+            b.setBackgroundColor(R.color.azul);
             b.setOnClickListener(this);
             gridLayout.addView(b, i);
         }
