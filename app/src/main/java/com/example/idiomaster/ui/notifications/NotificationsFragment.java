@@ -27,7 +27,7 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
     private FragmentNotificationsBinding binding;
     private String[] idiomas= {"Español", "Italiano", "Ingles"};
     private String idioma;
-    private IDao doa;
+    private DaoImplement doa;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,12 +41,15 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
         spinner.setAdapter(adaptadorIdiomas);
         spinner.setOnItemSelectedListener(this);
         doa = new DaoImplement(requireContext());
+        binding.correoElectronico.setText(IniciarSesion.getInicioSesionUsuario().getEmail());
         binding.guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Usuario usuario = IniciarSesion.getInicioSesionUsuario();
-                doa.actualizarProgreso(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(), usuario.getProgresoNivel());
-                IniciarSesion.setInicioSesionUsuario(doa.cambiarIdioma(IniciarSesion.getInicioSesionUsuario().getEmail(), idioma));
+                doa.actualizarProgresoFirebase(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(), usuario.getProgresoNivel());
+                doa.cambiarIdiomaFirebase(usuario.getEmail(), idioma);
+                /*doa.actualizarProgreso(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(), usuario.getProgresoNivel());
+                IniciarSesion.setInicioSesionUsuario(doa.cambiarIdioma(IniciarSesion.getInicioSesionUsuario().getEmail(), idioma));*/
             }
         });
         return root;

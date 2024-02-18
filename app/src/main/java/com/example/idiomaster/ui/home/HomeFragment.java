@@ -58,8 +58,6 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
         recyclerViewNiveles.setHasFixedSize(true);
         recyclerViewNiveles.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-
-
         recyclerViewMundos = root.findViewById(R.id.recyclerViewMundos);
         recyclerViewMundos.setHasFixedSize(true);
         recyclerViewMundos.setLayoutManager(new LinearLayoutManager(requireContext()));

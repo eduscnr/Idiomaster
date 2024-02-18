@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        IDao dao = new DaoImplement(this);
-        Usuario usuario = IniciarSesion.getInicioSesionUsuario();
-        dao.actualizarProgreso(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(), usuario.getProgresoNivel());
+        DaoImplement dao = new DaoImplement(this);
+        dao.actualizarProgresoFirebase(IniciarSesion.getInicioSesionUsuario().getEmail(),IniciarSesion.getInicioSesionUsuario().getIdioma(),
+                IniciarSesion.getInicioSesionUsuario().getProgresoMundo(), IniciarSesion.getInicioSesionUsuario().getProgresoNivel());
     }
 }

@@ -15,7 +15,9 @@ import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.database.DatabaseSqlite;
 import com.example.idiomaster.databinding.ActivityIniciarSesionBinding;
+import com.example.idiomaster.modelo.ProgresoFireBase;
 import com.example.idiomaster.modelo.Usuario;
+import com.example.idiomaster.modelo.UsuarioFireBase;
 import com.example.idiomaster.registrar.Registro;
 import com.example.idiomaster.repositorio.DaoImplement;
 import com.example.idiomaster.repositorio.IDao;
@@ -32,10 +34,25 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class IniciarSesion extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0001;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference mDatabase;
     private ActivityIniciarSesionBinding binding;
     private GoogleSignInClient mGoogleSignInClient;
     private static Usuario inicioSesionUsuario;
@@ -43,7 +60,8 @@ public class IniciarSesion extends AppCompatActivity {
             .requestIdToken("232536227001-8vodv266emdtju434ksdpqhs2gj8eldu.apps.googleusercontent.com")
             .requestEmail()
             .build();
-    private IDao daoImplement;
+    private DaoImplement daoImplement;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,33 +70,55 @@ public class IniciarSesion extends AppCompatActivity {
         DatabaseSqlite databaseSqlite = new DatabaseSqlite(this);
         databaseSqlite.getReadableDatabase();
         firebaseAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         daoImplement = new DaoImplement(IniciarSesion.this);
+        //actualizarProgreso("idiomaster@gmail.com", "it", 2, 2);
         binding.iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = binding.email.getText().toString().trim();
                 String password = binding.password.getText().toString().trim();
                 firebaseAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Inicio de sesión exitoso
-                                Toast.makeText(IniciarSesion.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                                if(daoImplement.buscarUsuario(email)){
-                                    inicioSesionUsuario = daoImplement.iniciarSesionUsuario(email);
-                                    Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish(); // Esto evita que el usuario regrese a la pantalla de inicio de sesión presionando el botón "Atrás"
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Inicio de sesión exitoso
+                                    Toast.makeText(IniciarSesion.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                                    Thread hilo = new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                               daoImplement.recuperarUsuario(email);
+                                                // Espera 2 segundos
+                                                Thread.sleep(2000);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                            System.out.println("Usuario que se quiere logear: " + inicioSesionUsuario);
+                                            // Luego de esperar 2 segundos, ejecuta el código
+                                            Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+
+                                    hilo.start();
+                                    /*if (daoImplement.buscarUsuario(email)) {
+                                        inicioSesionUsuario = daoImplement.recuperarUsuario(email);
+                                        Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish(); // Esto evita que el usuario regrese a la pantalla de inicio de sesión presionando el botón "Atrás"
+                                    } else {
+                                        Toast.makeText(IniciarSesion.this, "El usuario existe pero no en la base de datos, lo siento", Toast.LENGTH_SHORT).show();
+                                    }*/
+                                } else {
+                                    // Error al iniciar sesión
+                                    Toast.makeText(IniciarSesion.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
                                 }
-                                Toast.makeText(IniciarSesion.this, "El usuario existe pero no en la base de datos, lo siento", Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Error al iniciar sesión
-                                Toast.makeText(IniciarSesion.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
+                        });
             }
         });
         binding.signInButton.setOnClickListener(new View.OnClickListener() {
@@ -96,10 +136,12 @@ public class IniciarSesion extends AppCompatActivity {
         });
 
     }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -107,18 +149,44 @@ public class IniciarSesion extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                if(daoImplement.buscarUsuario(account.getEmail())){
+                Thread hilo = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            daoImplement.recuperarUsuario(account.getEmail());
+                            // Espera 2 segundos
+                            Thread.sleep(2000);
+                            if(inicioSesionUsuario != null){
+                                Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                daoImplement.registrarNuevoUsuario(account.getEmail());
+                                daoImplement.recuperarUsuario(account.getEmail());
+                                Thread.sleep(2000);
+                                System.out.println(inicioSesionUsuario);
+                                Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                        firebaseAuthWithGoogle(account.getIdToken());
+                    }
+                });
+
+                hilo.start();
+                /*if (daoImplement.buscarUsuario(account.getEmail())) {
                     inicioSesionUsuario = daoImplement.iniciarSesionUsuario(account.getEmail());
-                }else{
+                } else {
                     Toast.makeText(IniciarSesion.this, "Vas a perder todo el progreso de la cuenta si tenias una", Toast.LENGTH_SHORT).show();
                     daoImplement.registrarUsuario(account.getEmail());
                     inicioSesionUsuario = daoImplement.iniciarSesionUsuario(account.getEmail());
-                }
-                //Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
-                //Para lanzar otra actividad
-                Intent i = new Intent(IniciarSesion.this, MainActivity.class);
-                startActivity(i);
+                }*/
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 //Log.w(TAG, "Google sign in failed", e);
@@ -128,6 +196,7 @@ public class IniciarSesion extends AppCompatActivity {
             }
         }
     }
+
     private void firebaseAuthWithGoogle(String idToken) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
