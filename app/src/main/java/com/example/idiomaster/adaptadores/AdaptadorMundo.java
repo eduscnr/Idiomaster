@@ -1,6 +1,9 @@
 package com.example.idiomaster.adaptadores;
 
 import android.content.Context;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.R;
@@ -37,6 +41,32 @@ public class AdaptadorMundo extends RecyclerView.Adapter<AdaptadorMundo.ViewHold
     public void onBindViewHolder(@NonNull AdaptadorMundo.ViewHolderMundo holder, int position) {
         Mundo mundo = mundos.get(position);
         holder.nombreMundo.setText(mundo.getNombre());
+        switch (mundo.getNombre()){
+            case "Madrid":
+                holder.constraintLayout.setBackgroundResource(R.drawable.madridanime);
+                applyBrightness(holder.constraintLayout, 1.8f);
+                break;
+            case "Barcelona":
+                holder.constraintLayout.setBackgroundResource(R.drawable.barcelonaanime);
+                applyBrightness(holder.constraintLayout, 0.9f);
+                break;
+            case "London":
+                holder.constraintLayout.setBackgroundResource(R.drawable.londresanime);
+                applyBrightness(holder.constraintLayout,0.9f);
+                break;
+            case "Dublin":
+                holder.constraintLayout.setBackgroundResource(R.drawable.dublinanime);
+                applyBrightness(holder.constraintLayout,0.9f);
+                break;
+            case "Roma":
+                holder.constraintLayout.setBackgroundResource(R.drawable.romaanime);
+                applyBrightness(holder.constraintLayout,0.9f);
+                break;
+            case "Napoli":
+                holder.constraintLayout.setBackgroundResource(R.drawable.napolianime);
+                applyBrightness(holder.constraintLayout,0.9f);
+                break;
+        }
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +74,13 @@ public class AdaptadorMundo extends RecyclerView.Adapter<AdaptadorMundo.ViewHold
                 listener.onClickCardView(posicion);
             }
         });
+    }
+    private void applyBrightness(View view, float intensidad) {
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(intensidad);
+
+        ColorFilter filter = new ColorMatrixColorFilter(matrix);
+        view.getBackground().setColorFilter(filter);
     }
 
     @Override
@@ -54,10 +91,12 @@ public class AdaptadorMundo extends RecyclerView.Adapter<AdaptadorMundo.ViewHold
     public class ViewHolderMundo extends RecyclerView.ViewHolder {
         private TextView nombreMundo;
         private CardView cardView;
+        private ConstraintLayout constraintLayout;
         public ViewHolderMundo(@NonNull View itemView) {
             super(itemView);
             nombreMundo = itemView.findViewById(R.id.cv_txt_NombreMundo);
             cardView = itemView.findViewById(R.id.cardViewMundo);
+            constraintLayout = itemView.findViewById(R.id.constrainMundo);
         }
     }
 }

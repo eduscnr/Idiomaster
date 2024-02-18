@@ -7,35 +7,42 @@
     tools:context=".iniciar.IniciarSesion"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="198dp"
+        android:src="@drawable/imagen_inicio_sesion" />
+
     <TextView
-        android:layout_marginTop="125dp"
         android:paddingLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:text="Bienvenidos Idiomaster"/>
+        android:text="Bienvenido a Idiomaster"
+        android:fontFamily="@font/fontspring_grotesco_boldit"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
-        android:text="Registrate para aprender nuevos idiomas"
+        android:text="Regístrate para aprender nuevos idiomas"
         android:textStyle="italic"
-        android:textColor="@color/gray" />
+        android:textColor="@color/gray"
+        android:fontFamily="@font/fontspring_grotesco_black"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="25dp"
         android:paddingLeft="15dp"
         android:text="Email"
+        android:fontFamily="@font/fontspring_grotesco_black"
         android:textStyle="bold"
         android:textColor="@color/black"
         />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="5dp"
@@ -54,12 +61,13 @@
         android:layout_marginTop="15dp"
         android:paddingLeft="15dp"
         android:text="Contraseña"
+        android:fontFamily="@font/fontspring_grotesco_black"
         android:textColor="@color/black"
         android:textStyle="bold"
         />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Contraseña"
@@ -76,26 +84,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:gravity="center">
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="150dp"
-            android:background="@drawable/card_view"
+            android:id="@+id/iniciarSesion"
+            android:layout_width="189dp"
             android:layout_height="wrap_content"
-            android:text="Iniciar sesion" />
+            android:background="@drawable/card_view"
+            android:fontFamily="@font/fontspring_grotesco_black"
+            android:text="Iniciar sesión" />
     </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="23dp"
+        android:fontFamily="@font/fontspring_grotesco_black"
+        android:textColor="@color/black"
+        android:text="o inicia sesion con Google"/>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signInButton"
+        android:layout_width="217dp"
+        android:layout_gravity="center"
+        android:layout_height="67dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+    </com.google.android.gms.common.SignInButton>
+
     <TextView
         android:id="@+id/crearCuenta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="12dp"
         android:paddingLeft="15dp"
         android:gravity="center"
-        android:text="No tienes cuenta, create un aquí"
+        android:text="¿No tienes cuenta? Crea una aquí"
         android:textColor="@color/black"
+        android:fontFamily="@font/fontspring_grotesco_book"
         android:textStyle="italic"
         />
-
 </LinearLayout>

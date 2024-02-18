@@ -2,6 +2,15 @@ package com.example.idiomaster.registrar;
 
 import android.os.Bundle;
 
+import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.modelo.Mundo;
+import com.example.idiomaster.modelo.Nivel;
+import com.example.idiomaster.modelo.Usuario;
+import com.example.idiomaster.repositorio.DaoImplement;
+import com.example.idiomaster.repositorio.IDao;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private static Nivel nivelSeleccionado;
+    private static String idiomaSeleccionado = IniciarSesion.getInicioSesionUsuario().getIdioma();
+    private static Mundo mundoActual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -42,5 +57,29 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setNivelSeleccionado(Nivel nivelSeleccionado) {
         MainActivity.nivelSeleccionado = nivelSeleccionado;
+    }
+
+    public static String getIdiomaSeleccionado() {
+        return idiomaSeleccionado;
+    }
+
+    public static void setIdiomaSeleccionado(String idiomaSeleccionado) {
+        MainActivity.idiomaSeleccionado = idiomaSeleccionado;
+    }
+
+    public static Mundo getMundoActual() {
+        return mundoActual;
+    }
+
+    public static void setMundoActual(Mundo mundoActual) {
+        MainActivity.mundoActual = mundoActual;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DaoImplement dao = new DaoImplement(this);
+        dao.actualizarProgresoFirebase(IniciarSesion.getInicioSesionUsuario().getEmail(),IniciarSesion.getInicioSesionUsuario().getIdioma(),
+                IniciarSesion.getInicioSesionUsuario().getProgresoMundo(), IniciarSesion.getInicioSesionUsuario().getProgresoNivel());
     }
 }
