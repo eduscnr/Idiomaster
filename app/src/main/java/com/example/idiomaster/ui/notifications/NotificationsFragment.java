@@ -5,22 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.adaptadores.AdaptadorIdiomas;
 import com.example.idiomaster.databinding.FragmentNotificationsBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Usuario;
 import com.example.idiomaster.repositorio.DaoImplement;
-import com.example.idiomaster.repositorio.IDao;
+
 
 public class NotificationsFragment extends Fragment implements Spinner.OnItemSelectedListener{
 
@@ -40,7 +36,7 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
         AdaptadorIdiomas adaptadorIdiomas = new AdaptadorIdiomas(requireContext(), R.layout.item_idioma, idiomas);
         spinner.setAdapter(adaptadorIdiomas);
         spinner.setOnItemSelectedListener(this);
-        doa = new DaoImplement(requireContext());
+        doa = new DaoImplement();
         binding.correoElectronico.setText(IniciarSesion.getInicioSesionUsuario().getEmail());
         binding.guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override

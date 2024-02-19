@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.idiomaster.MainActivity;
-import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityRegistroBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.repositorio.DaoImplement;
@@ -32,7 +30,7 @@ public class Registro extends AppCompatActivity {
         binding = ActivityRegistroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         firebaseAuth = FirebaseAuth.getInstance();
-        daoImplement = new DaoImplement(Registro.this);
+        daoImplement = new DaoImplement();
         binding.registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,16 +53,6 @@ public class Registro extends AppCompatActivity {
                                 Intent i = new Intent(Registro.this, IniciarSesion.class);
                                 startActivity(i);
                                 finish();
-                                /*if (daoImplement.buscarUsuario(ema)) {
-                                    System.out.println("existe");
-                                    Toast.makeText(Registro.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(Registro.this, "Registro realizado", Toast.LENGTH_SHORT).show();
-                                    daoImplement.registrarUsuario(ema);
-                                    Intent i = new Intent(Registro.this, IniciarSesion.class);
-                                    startActivity(i);
-                                    finish();
-                                }*/
                             } else {
                                 // Error al crear el usuario
                                 Toast.makeText(Registro.this, "Usuario ya registrado", Toast.LENGTH_SHORT).show();

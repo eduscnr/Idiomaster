@@ -16,9 +16,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityTraducePalabrasBinding;
 import com.example.idiomaster.dialogo.FinalizarJuego;
 import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.registrar.MainActivity;
 import com.example.idiomaster.victoriaderrota.Derrota;
 import com.example.idiomaster.victoriaderrota.Victoria;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,7 +56,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
 
         tvCorrectoInCorrecto = binding.textviewCorrectoIncorrecto;
         gridLayout = binding.gridJugar;
-        System.out.println("Niveles totales: "+MainActivity.getMundoActual().getNiveles().size());
+        System.out.println("Niveles totales: "+ MainActivity.getMundoActual().getNiveles().size());
         opciones = new ArrayList<>();
         binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
 
@@ -71,7 +74,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
         //traducirTexto(binding.palabraTraducir, "es", sistemaIdioma);
         try {
             Thread.sleep(500);
-            traducirTexto(binding.palabraTraducir, "es", sistemaIdioma);
+            traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -212,7 +215,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
             //Aumentar el indice para que pase a la siguiente palabra independientemente si se equivoca o acierta
             if (indiceActual <= MainActivity.getNivelSeleccionado().getPalabras().size() && indiceActual < MainActivity.getNivelSeleccionado().getPalabras().size()) {
                 binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
-                traducirTexto(binding.palabraTraducir, "es", sistemaIdioma);
+                traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
             } else {
                 // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
                 if(fallos>3){

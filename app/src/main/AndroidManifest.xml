@@ -16,12 +16,14 @@
         tools:targetApi="31" >
         <activity
             android:name=".victoriaderrota.Derrota"
+            android:theme="@style/Theme.Idiomaster.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".victoriaderrota.Victoria"
+            android:theme="@style/Theme.Idiomaster.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".registrar.MainActivity"
             android:exported="false" />
         <activity
             android:name=".registrar.Registro"

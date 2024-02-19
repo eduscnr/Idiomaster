@@ -5,9 +5,7 @@ import android.os.Bundle;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
-import com.example.idiomaster.modelo.Usuario;
 import com.example.idiomaster.repositorio.DaoImplement;
-import com.example.idiomaster.repositorio.IDao;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.ActionBar;
@@ -19,8 +17,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityMainBinding;
-import com.example.idiomaster.modelo.Nivel;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DaoImplement dao = new DaoImplement(this);
+        DaoImplement dao = new DaoImplement();
         dao.actualizarProgresoFirebase(IniciarSesion.getInicioSesionUsuario().getEmail(),IniciarSesion.getInicioSesionUsuario().getIdioma(),
                 IniciarSesion.getInicioSesionUsuario().getProgresoMundo(), IniciarSesion.getInicioSesionUsuario().getProgresoNivel());
     }

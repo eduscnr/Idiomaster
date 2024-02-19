@@ -30,10 +30,10 @@
         <item name="android:textSize">25dp</item>
         <item name="android:fontFamily">@font/fontspring_grotesco_bold</item>
     </style>
-    <style name="palabraEjemplo">
+    <style name="palabraATraducir">
         <item name="android:textColor">@color/azul</item>
         <item name="android:textSize">20dp</item>
-        <item name="android:fontFamily">@font/fontspring_grotesco_medium</item>
+        <item name="android:fontFamily">@font/fontspring_grotesco_book</item>
     </style>
     <style name="Theme.Idiomaster.NoActionBar">
         <item name="windowActionBar">false</item>
