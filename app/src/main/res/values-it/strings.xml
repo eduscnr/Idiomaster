@@ -6,4 +6,24 @@
     <string name="title_notifications">Impostazioni</string>
     <string name="hello_blank_fragment">Ciao frammento vuoto</string>
     <string name="enunciado_primer_ejercicio">Traduci queste parole</string>
+    <string name="Nivel_1">Livello 1</string>
+    <string name="idioma">Spagnolo</string>
+    <string name="usuario_gmail_com">utente@gmail.com</string>
+    <string name="guardar_cambios">Salva modifiche</string>
+    <string name="cambiar_idioma">Cambia lingua</string>
+    <string name="si_abandonas_perderas_todo_tu_progreso_de_este_nivel">Se abbandoni, perderai tutto il tuo progresso in questo livello</string>
+    <string name="seguir_aprendiendo">Continua a imparare</string>
+    <string name="salir">Uscire</string>
+    <string name="continuar">Continua</string>
+    <string name="validar">Convalida</string>
+    <string name="hola">Ciao</string>
+    <string name="bienvenidos_idiomaster">Benvenuti in Idiomaster</string>
+    <string name="registrate_para_aprender_nuevos_idiomas">Registrati per imparare nuove lingue</string>
+    <string name="email">E-mail</string>
+    <string name="contrasenia">Password</string>
+    <string name="repite_la_contrasenia">Ripeti la password</string>
+    <string name="registrar">Registrati</string>
+    <string name="no_tienes_cuenta_crea_una_aqui">Non hai un account? Crea uno qui</string>
+    <string name="o_inicia_sesion_con_google">o accedi con Google</string>
+    <string name="iniciar_sesi">Accedi</string>
 </resources>

@@ -10,7 +10,7 @@
         android:layout_width="80dp"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Español" />
+        android:text="@string/idioma" />
 
     <ImageView
         android:id="@+id/bandera"
