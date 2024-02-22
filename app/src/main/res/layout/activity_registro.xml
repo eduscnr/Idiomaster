@@ -4,11 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Registro"
+    tools:context=".registrar.Registro"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:src="@drawable/imagen_inicio_sesion"/>
+
     <TextView
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="25dp"
         android:paddingLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,35 +32,48 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="125dp"
-        android:paddingLeft="5dp"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="15dp"
         android:text="Email"
         android:textStyle="bold"
         android:textColor="@color/black"
         />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:ems="10"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="10dp"
+        android:hint="Email"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/drawable_icono_password"
 
+        android:ems="10"
+        android:background="@drawable/card_view"
         android:inputType="textEmailAddress" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="15dp"
         android:text="Contraseña"
         android:textColor="@color/black"
         android:textStyle="bold"
         />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:hint="Contraseña"
+        android:drawableLeft="@drawable/drawable_icono_email"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="8dp"
+        android:background="@drawable/card_view"
         android:ems="10"
         android:inputType="textPassword" />
 
@@ -63,17 +81,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="15dp"
         android:text="Repite la contraseña"
         android:textColor="@color/black"
         android:textStyle="bold"
         />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/passwordRepet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:hint="Repetir contraseña"
+        android:drawableLeft="@drawable/drawable_icono_email"
+        android:paddingLeft="10dp"
+        android:background="@drawable/card_view"
         android:ems="10"
+        android:drawablePadding="8dp"
         android:inputType="textPassword" />
 
     <LinearLayout
@@ -83,8 +108,9 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/registrar"
             android:layout_width="150dp"
+            android:background="@drawable/card_view"
             android:layout_height="wrap_content"
             android:text="Registrar" />
     </LinearLayout>

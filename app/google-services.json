@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "232536227001",
+    "firebase_url": "https://idiomaster-b9d5d-default-rtdb.firebaseio.com",
     "project_id": "idiomaster-b9d5d",
     "storage_bucket": "idiomaster-b9d5d.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.idiomaster"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "232536227001-hbe468g99j2n9dbhi29ogct5f8qc8fu6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.idiomaster",
+            "certificate_hash": "9cddc90c8d9b59df2ac998dd47e81e4c170a2979"
+          }
+        },
+        {
+          "client_id": "232536227001-8vodv266emdtju434ksdpqhs2gj8eldu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB38pm5P3tYb2IcFobMOmTjT_rjhHez5iA"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232536227001-8vodv266emdtju434ksdpqhs2gj8eldu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

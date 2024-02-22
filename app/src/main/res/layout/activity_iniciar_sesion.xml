@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".iniciar.IniciarSesion"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="198dp"
+        android:src="@drawable/imagen_inicio_sesion" />
+
+    <TextView
+        android:paddingLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="Bienvenido a Idiomaster"
+        android:fontFamily="@font/fontspring_grotesco_boldit"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="Regístrate para aprender nuevos idiomas"
+        android:textStyle="italic"
+        android:textColor="@color/gray"
+        android:fontFamily="@font/fontspring_grotesco_black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:paddingLeft="15dp"
+        android:text="Email"
+        android:fontFamily="@font/fontspring_grotesco_black"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="10dp"
+        android:hint="Email"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/drawable_icono_password"
+
+        android:ems="10"
+        android:background="@drawable/card_view"
+        android:inputType="textEmailAddress" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:text="Contraseña"
+        android:fontFamily="@font/fontspring_grotesco_black"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Contraseña"
+        android:drawableLeft="@drawable/drawable_icono_email"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="8dp"
+        android:background="@drawable/card_view"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/iniciarSesion"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_view"
+            android:fontFamily="@font/fontspring_grotesco_black"
+            android:text="Iniciar sesión" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="23dp"
+        android:fontFamily="@font/fontspring_grotesco_black"
+        android:textColor="@color/black"
+        android:text="o inicia sesion con Google"/>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signInButton"
+        android:layout_width="217dp"
+        android:layout_gravity="center"
+        android:layout_height="67dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+    </com.google.android.gms.common.SignInButton>
+
+    <TextView
+        android:id="@+id/crearCuenta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="15dp"
+        android:gravity="center"
+        android:text="¿No tienes cuenta? Crea una aquí"
+        android:textColor="@color/black"
+        android:fontFamily="@font/fontspring_grotesco_book"
+        android:textStyle="italic"
+        />
+</LinearLayout>

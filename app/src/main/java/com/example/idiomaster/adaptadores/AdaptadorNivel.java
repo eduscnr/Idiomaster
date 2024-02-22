@@ -59,8 +59,8 @@ public class AdaptadorNivel extends RecyclerView.Adapter<AdaptadorNivel.ViewHold
         private CardView cardView;
         public ViewHolderNivel(@NonNull View itemView) {
             super(itemView);
-            nombreNivel = itemView.findViewById(R.id.nombreMenu);
-            cardView = itemView.findViewById(R.id.cardView);
+            nombreNivel = itemView.findViewById(R.id.cv_txt_NombreNivel);
+            cardView = itemView.findViewById(R.id.cardViewNivel);
         }
     }
 }

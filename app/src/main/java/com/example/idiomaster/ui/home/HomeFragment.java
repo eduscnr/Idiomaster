@@ -5,22 +5,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
+import com.example.idiomaster.adaptadores.AdaptadorMundo;
 import com.example.idiomaster.databinding.FragmentHomeBinding;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.adaptadores.AdaptadorNivel;
+import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
+import com.example.idiomaster.registrar.MainActivity;
 import com.example.idiomaster.ui.minijuegos.TraducePalabras;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,25 +32,45 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements AdaptadorNivel.listener{
+public class HomeFragment extends Fragment implements AdaptadorNivel.listener, AdaptadorMundo.listener{
     private List<Nivel> niveles;
+    private List<Mundo> mundos;
     private AdaptadorNivel.listener listener;
+    private AdaptadorMundo.listener listenerMundo;
     private FragmentHomeBinding binding;
     private AdaptadorNivel adaptadorNivel;
-    private RecyclerView r;
+    private AdaptadorMundo adaptadorMundo;
+    private RecyclerView recyclerViewNiveles;
+    private RecyclerView recyclerViewMundos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
        /* HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);*/
         niveles = obtenerNiveles();
+        mundos = obtenerMundos();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        listener = this;
-        r = root.findViewById(R.id.recyclerView);
-        AdaptadorNivel adaptadorNivel = new AdaptadorNivel(niveles, this);
-        r.setHasFixedSize(true);
-        r.setLayoutManager(new LinearLayoutManager(requireContext()));
+        listener = this::onClickCardView;
+        listenerMundo = this::onClickCardViewMundo;
+        recyclerViewNiveles = root.findViewById(R.id.recyclerViewNiveles);
+        recyclerViewNiveles.setHasFixedSize(true);
+        recyclerViewNiveles.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        recyclerViewMundos = root.findViewById(R.id.recyclerViewMundos);
+        recyclerViewMundos.setHasFixedSize(true);
+        recyclerViewMundos.setLayoutManager(new LinearLayoutManager(requireContext()));
+        AdaptadorMundo adaptadorMundo = new AdaptadorMundo(mundos, this::onClickCardViewMundo);
+        recyclerViewMundos.setAdapter(adaptadorMundo);
+        binding.salirButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerViewMundos.setVisibility(View.VISIBLE);
+                recyclerViewNiveles.setVisibility(View.INVISIBLE);
+                binding.salirButton.setVisibility(View.INVISIBLE);
+            }
+        });
+        binding.salirButton.setVisibility(View.INVISIBLE);
         return root;
     }
 
@@ -62,22 +83,18 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener{
     public List<Nivel> obtenerNiveles(){
         List<Nivel> niveles = new ArrayList<>();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("minijuegos/es/mundos");
+        DatabaseReference databaseReference = firebaseDatabase.getReference("minijuegos/"+ IniciarSesion.getInicioSesionUsuario().getIdioma()+"/mundos");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot d : snapshot.getChildren()) {
                     Mundo mundo = d.getValue(Mundo.class);
-                    System.out.println(mundo);
                     for (Nivel n : mundo.getNiveles()){
-                        System.out.println(n);
                         niveles.add(n);
                     }
                 }
-                System.out.println("HOla");
                 adaptadorNivel = new AdaptadorNivel(niveles, listener);
-                System.out.println(niveles);
-                r.setAdapter(adaptadorNivel);
+                recyclerViewNiveles.setAdapter(adaptadorNivel);
             }
 
             @Override
@@ -87,12 +104,55 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener{
         });
         return niveles;
     }
+    public List<Mundo> obtenerMundos(){
+        List<Mundo>mundos = new ArrayList<>();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("minijuegos/"+IniciarSesion.getInicioSesionUsuario().getIdioma()+"/mundos");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    Mundo mundo = d.getValue(Mundo.class);
+                    mundos.add(mundo);
+                }
+                adaptadorMundo = new AdaptadorMundo(mundos, listenerMundo);
+                recyclerViewMundos.setAdapter(adaptadorMundo);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return mundos;
+    }
 
     @Override
     public void onClickCardView(int posicion) {
-        System.out.println(niveles.get(posicion));
         MainActivity.setNivelSeleccionado(niveles.get(posicion));
-        Intent traducePalabras = new Intent(requireContext(), TraducePalabras.class);
-        requireContext().startActivity(traducePalabras);
+        if(niveles.get(posicion).getId()==IniciarSesion.getInicioSesionUsuario().getProgresoNivel()){
+            Intent traducePalabras = new Intent(requireContext(), TraducePalabras.class);
+            requireContext().startActivity(traducePalabras);
+        } else if (niveles.get(posicion).getId() < IniciarSesion.getInicioSesionUsuario().getProgresoNivel()) {
+            Toast.makeText(requireContext(), "Nivel completado pasa al sigueinte", Toast.LENGTH_SHORT).show();
+        } else{
+            Toast.makeText(requireContext(), "No tienes el nivel desbloqueado", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void onClickCardViewMundo(int posicion){
+        Mundo mundoSeleccionado = mundos.get(posicion);
+        MainActivity.setMundoActual(mundoSeleccionado);
+        if(mundoSeleccionado.getId()<= IniciarSesion.getInicioSesionUsuario().getProgresoMundo()){
+            List<Nivel> nivelesDeUnMundo = mundoSeleccionado.getNiveles();
+            niveles = nivelesDeUnMundo;
+            AdaptadorNivel adaptadorNivel = new AdaptadorNivel(nivelesDeUnMundo, this::onClickCardView);
+            recyclerViewMundos.setVisibility(View.INVISIBLE);
+            recyclerViewNiveles.setVisibility(View.VISIBLE);
+            binding.salirButton.setVisibility(View.VISIBLE);
+            recyclerViewNiveles.setAdapter(adaptadorNivel);
+        }else{
+            Toast.makeText(requireContext(), "No tienes el mundo desbloqueado", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

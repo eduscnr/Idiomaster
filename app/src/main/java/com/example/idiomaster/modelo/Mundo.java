@@ -5,6 +5,7 @@ import java.util.List;
 public class Mundo {
     private String nombre;
     private List<Nivel> niveles;
+    private int id;
 
     public Mundo() {
     }
@@ -12,6 +13,12 @@ public class Mundo {
     public Mundo(String nombre, List<Nivel> niveles) {
         this.nombre = nombre;
         this.niveles = niveles;
+    }
+
+    public Mundo(String nombre, List<Nivel> niveles, int id) {
+        this.nombre = nombre;
+        this.niveles = niveles;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -30,11 +37,20 @@ public class Mundo {
         this.niveles = niveles;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Mundo{" +
                 "nombre='" + nombre + '\'' +
                 ", niveles=" + niveles +
+                ", id=" + id +
                 '}';
     }
 }

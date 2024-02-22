@@ -1,9 +1,12 @@
 package com.example.idiomaster.ui.minijuegos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,9 +15,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.idiomaster.MainActivity;
+
 import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityTraducePalabrasBinding;
+import com.example.idiomaster.dialogo.FinalizarJuego;
+import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.registrar.MainActivity;
+import com.example.idiomaster.victoriaderrota.Derrota;
+import com.example.idiomaster.victoriaderrota.Victoria;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class TraducePalabras extends AppCompatActivity implements View.OnClickListener {
+public class TraducePalabras extends AppCompatActivity implements View.OnClickListener, FinalizarJuego.IDialogoLisenerOnClick{
     private ActivityTraducePalabrasBinding binding;
     private List<String> opciones;
     private GridLayout gridLayout;
@@ -31,6 +45,8 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
     private String respuestPulsada;
     private TextView tvCorrectoInCorrecto;
     private List<String> opcionesBarajadas;
+    private String sistemaIdioma;
+    private int fallos = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +55,27 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
 
         tvCorrectoInCorrecto = binding.textviewCorrectoIncorrecto;
         gridLayout = binding.gridJugar;
-
+        System.out.println("Niveles totales: "+ MainActivity.getMundoActual().getNiveles().size());
         opciones = new ArrayList<>();
         binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
 
         int palabrasSize = MainActivity.getNivelSeleccionado().getPalabras().size();
         for (int i = 0; i < palabrasSize; i++) {
             opciones.add(MainActivity.getNivelSeleccionado().getPalabras().get(i));
+        }
+        // Obtén el idioma del sistema
+        Configuration config = getResources().getConfiguration();
+        Locale systemLocale = config.getLocales().get(0);
+        sistemaIdioma = systemLocale.getLanguage();
+        System.out.println(sistemaIdioma);
+
+        // Traducir palabra al idioma del sistema
+        //traducirTexto(binding.palabraTraducir, "es", sistemaIdioma);
+        try {
+            Thread.sleep(500);
+            traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
         aniadeHijos(2);
@@ -61,24 +91,56 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 }
             }
         });
-
-        // Obtén el idioma del sistema
-        Configuration config = getResources().getConfiguration();
-        Locale systemLocale = config.getLocales().get(0);
-
-        // Obtén el código de idioma del sistema
-        String languageCode = systemLocale.getLanguage();
-        TextView textView = findViewById(R.id.palabraTraducir);
-
-        if (languageCode.equals("es")) {
-            textView.setText("manzana");
-        } else if (languageCode.equals("en")) {
-            textView.setText("apple");
-        } else if (languageCode.equals("it")) {
-            textView.setText("mela");
-        }
+        binding.botonSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FinalizarJuego finalizarJuego = new FinalizarJuego();
+                finalizarJuego.show(getSupportFragmentManager(), "Parar");
+            }
+        });
+    }
+    private void traducirTexto(final TextView textView, String sourceLanguage, String targetLanguage) {
+        /*try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }*/
+        TranslatorOptions options = new TranslatorOptions.Builder()
+                .setSourceLanguage(sourceLanguage)
+                .setTargetLanguage(targetLanguage)
+                .build();
+        Translator translator = Translation.getClient(options);
+        DownloadConditions conditions = new DownloadConditions.Builder()
+                .requireWifi()
+                .build();
+        translator.downloadModelIfNeeded(conditions)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        translator.translate(textView.getText().toString())
+                                .addOnSuccessListener(new OnSuccessListener<String>() {
+                                    @Override
+                                    public void onSuccess(String s) {
+                                        textView.setText(s);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(TraducePalabras.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(TraducePalabras.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
+    @SuppressLint("ResourceAsColor")
     public void aniadeHijos(int k) {
         opcionesBarajadas = new ArrayList<>(opciones);
         Collections.shuffle(opcionesBarajadas);
@@ -102,7 +164,8 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 }
                 b.setText(opcionesBarajadas.get(indiceOpcionIncorrecta));
             }
-            b.setTextColor(Color.BLACK);
+            b.setTextColor(Color.WHITE);
+            b.setBackgroundColor(R.color.azul);
             b.setOnClickListener(this);
             gridLayout.addView(b, i);
         }
@@ -130,9 +193,14 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
     }
 
     public void validarRespuesta(){
-        //Comprobar si es correcto y si no
+        //Comprobarsi es correcto y si no
         if(respuestPulsada != null){
-            if (respuestPulsada.equalsIgnoreCase(binding.palabraTraducir.getText().toString())) {
+            // Obtener texto del TextView y limpiar cualquier espacio adicional
+            String textoTraducido = MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual).trim();
+            // Limpiar cualquier espacio adicional de la respuesta seleccionada
+            String respuestaSeleccionada = respuestPulsada.trim();
+
+            if (respuestaSeleccionada.equalsIgnoreCase(textoTraducido)){
                 //Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show();
                 tvCorrectoInCorrecto.setText("CORRECTO");
                 tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.teal_700));
@@ -146,10 +214,27 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
             //Aumentar el indice para que pase a la siguiente palabra independientemente si se equivoca o acierta
             if (indiceActual <= MainActivity.getNivelSeleccionado().getPalabras().size() && indiceActual < MainActivity.getNivelSeleccionado().getPalabras().size()) {
                 binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
+                traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
             } else {
                 // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
+                if(fallos>3){
+                    Intent derrotaIntent = new Intent(this, Derrota.class);
+                    startActivity(derrotaIntent);
+                }else{
+                    Intent victoriaIntent = new Intent(this, Victoria.class);
+                    startActivity(victoriaIntent);
+                    IniciarSesion.getInicioSesionUsuario().setProgresoNivel(IniciarSesion.getInicioSesionUsuario().getProgresoNivel()+1);
+                    if(MainActivity.getNivelSeleccionado().getId() == MainActivity.getMundoActual().getNiveles().get(MainActivity.getMundoActual().getNiveles().size()-1).getId()){
+                        IniciarSesion.getInicioSesionUsuario().setProgresoMundo(IniciarSesion.getInicioSesionUsuario().getProgresoMundo()+1);
+                    }
+                }
                 finish();
             }
         }
+    }
+
+    @Override
+    public void onBotonDialogoClic() {
+        finish();
     }
 }
