@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Idiomaster</string>
     <string name="title_home">Inicio</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Tablero</string>
     <string name="title_notifications">Configuración</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hola fragmento en blanco"</string>
     <string name="enunciado_primer_ejercicio">Traduce estas palabras</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Idiomaster</string>
+    <string name="title_home">inizio</string>
+    <string name="title_dashboard">Cruscotto</string>
+    <string name="title_notifications">Impostazioni</string>
+    <string name="hello_blank_fragment">Ciao frammento vuoto</string>
+    <string name="enunciado_primer_ejercicio">Traduci queste parole</string>
+</resources>

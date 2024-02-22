@@ -100,11 +100,6 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
         });
     }
     private void traducirTexto(final TextView textView, String sourceLanguage, String targetLanguage) {
-        /*try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }*/
         TranslatorOptions options = new TranslatorOptions.Builder()
                 .setSourceLanguage(sourceLanguage)
                 .setTargetLanguage(targetLanguage)
@@ -209,6 +204,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 //Toast.makeText(this, "Incorrecto", Toast.LENGTH_SHORT).show();
                 tvCorrectoInCorrecto.setText("INCORRECTO");
                 tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.purple_200));
+                fallos++;
                 indiceActual++;
             }
             //Aumentar el indice para que pase a la siguiente palabra independientemente si se equivoca o acierta
@@ -217,7 +213,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
             } else {
                 // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
-                if(fallos>3){
+                if(fallos>=3){
                     Intent derrotaIntent = new Intent(this, Derrota.class);
                     startActivity(derrotaIntent);
                 }else{
