@@ -4,4 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.historias.StoriesFragment"/>
+    tools:context=".ui.historias.StoriesFragment">
+
+
+    <RadioGroup
+        android:id="@+id/difficultyRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="113dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/rvCuentos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/easyButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/facil"
+            android:textColor="@color/black" />
+
+        <RadioButton
+            android:id="@+id/intermediateButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/intermedio"
+            android:textColor="@color/black" />
+
+        <RadioButton
+            android:id="@+id/advancedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/dificil"
+            android:textColor="@color/black" />
+    </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCuentos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="248dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyRadioGroup" />
+</androidx.constraintlayout.widget.ConstraintLayout>

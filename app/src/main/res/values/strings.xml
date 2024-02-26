@@ -5,4 +5,7 @@
     <string name="title_notifications">Configuración</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enunciado_primer_ejercicio">Traduce estas palabras</string>
+    <string name="facil">Fácil</string>
+    <string name="intermedio">Intermedio</string>
+    <string name="dificil">Difícil</string>
 </resources>

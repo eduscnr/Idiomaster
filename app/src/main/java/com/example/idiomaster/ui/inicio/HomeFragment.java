@@ -45,8 +45,6 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-       /* HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);*/
         niveles = obtenerNiveles();
         mundos = obtenerMundos();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
