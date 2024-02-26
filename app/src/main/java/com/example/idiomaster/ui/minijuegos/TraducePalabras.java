@@ -1,11 +1,13 @@
 package com.example.idiomaster.ui.minijuegos;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -21,7 +23,10 @@ import com.example.idiomaster.R;
 import com.example.idiomaster.databinding.ActivityTraducePalabrasBinding;
 import com.example.idiomaster.dialogo.FinalizarJuego;
 import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.modelo.Usuario;
 import com.example.idiomaster.registrar.MainActivity;
+import com.example.idiomaster.repositorio.DaoImplement;
+import com.example.idiomaster.utils.InternetUtil;
 import com.example.idiomaster.victoriaderrota.Derrota;
 import com.example.idiomaster.victoriaderrota.Victoria;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -210,6 +215,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 //Toast.makeText(this, "Incorrecto", Toast.LENGTH_SHORT).show();
                 tvCorrectoInCorrecto.setText("INCORRECTO");
                 tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.purple_200));
+                fallos++;
                 indiceActual++;
             }
             //Aumentar el indice para que pase a la siguiente palabra independientemente si se equivoca o acierta
@@ -218,9 +224,10 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                 traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
             } else {
                 // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
-                if(fallos>3){
+                if(fallos>=3){
                     Intent derrotaIntent = new Intent(this, Derrota.class);
                     startActivity(derrotaIntent);
+
                 }else{
                     Intent victoriaIntent = new Intent(this, Victoria.class);
                     startActivity(victoriaIntent);
@@ -228,10 +235,43 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                     if(MainActivity.getNivelSeleccionado().getId() == MainActivity.getMundoActual().getNiveles().get(MainActivity.getMundoActual().getNiveles().size()-1).getId()){
                         IniciarSesion.getInicioSesionUsuario().setProgresoMundo(IniciarSesion.getInicioSesionUsuario().getProgresoMundo()+1);
                     }
+                    DaoImplement firebaseData = new DaoImplement();
+                    Usuario usuario = IniciarSesion.getInicioSesionUsuario();
+                    firebaseData.actualizarProgresoFirebase(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(),usuario.getProgresoNivel());
                 }
                 finish();
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        InternetUtil.isOnline(new InternetUtil.OnOnlineCheckListener() {
+            @Override
+            public void onResult(boolean isOnline) {
+                if (!isOnline) {
+                        runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNoInternetDialog();
+                        }
+                    });
+                }
+            }
+        });
+        super.onResume();
+    }
+    private void showNoInternetDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Sin conexión a Internet")
+                .setMessage("Necesitas conectarte a Internet para usar esta aplicación.")
+                .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishAffinity();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override

@@ -19,14 +19,14 @@
         android:textSize="20dp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:text="Bienvenido a Idiomaster"
+        android:text="@string/bienvenidos_idiomaster"
         android:fontFamily="@font/fontspring_grotesco_boldit"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
-        android:text="Regístrate para aprender nuevos idiomas"
+        android:text="@string/registrate_para_aprender_nuevos_idiomas"
         android:textStyle="italic"
         android:textColor="@color/gray"
         android:fontFamily="@font/fontspring_grotesco_black"/>
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:paddingLeft="15dp"
-        android:text="Email"
+        android:text="@string/email"
         android:fontFamily="@font/fontspring_grotesco_black"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -48,7 +48,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:paddingLeft="10dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:drawablePadding="8dp"
         android:drawableLeft="@drawable/drawable_icono_password"
 
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:paddingLeft="15dp"
-        android:text="Contraseña"
+        android:text="@string/contrasenia"
         android:fontFamily="@font/fontspring_grotesco_black"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -70,7 +70,7 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Contraseña"
+        android:hint="@string/contrasenia"
         android:drawableLeft="@drawable/drawable_icono_email"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/card_view"
             android:fontFamily="@font/fontspring_grotesco_black"
-            android:text="Iniciar sesión" />
+            android:text="@string/iniciar_sesi" />
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
         android:layout_marginTop="23dp"
         android:fontFamily="@font/fontspring_grotesco_black"
         android:textColor="@color/black"
-        android:text="o inicia sesion con Google"/>
+        android:text="@string/o_inicia_sesion_con_google"/>
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
         android:layout_width="217dp"
@@ -121,7 +121,7 @@
         android:layout_marginTop="12dp"
         android:paddingLeft="15dp"
         android:gravity="center"
-        android:text="¿No tienes cuenta? Crea una aquí"
+        android:text="@string/no_tienes_cuenta_crea_una_aqui"
         android:textColor="@color/black"
         android:fontFamily="@font/fontspring_grotesco_book"
         android:textStyle="italic"

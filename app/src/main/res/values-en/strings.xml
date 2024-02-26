@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Idiomaster</string>
+    <string name="title_home">Start</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enunciado_primer_ejercicio">Translate these words</string>
+    <string name="Nivel_1">Level 1</string>
+    <string name="idioma">Spanish</string>
+    <string name="usuario_gmail_com">user@gmail.com</string>
+    <string name="guardar_cambios">Save changes</string>
+    <string name="cambiar_idioma">Change language</string>
+    <string name="si_abandonas_perderas_todo_tu_progreso_de_este_nivel">If you leave, you will lose all your progress in this level</string>
+    <string name="seguir_aprendiendo">Continue learning</string>
+    <string name="salir">Exit</string>
+    <string name="continuar">Continue</string>
+    <string name="validar">Validate</string>
+    <string name="hola">Hello</string>
+    <string name="bienvenidos_idiomaster">Welcome to Idiomaster</string>
+    <string name="registrate_para_aprender_nuevos_idiomas">Sign up to learn new languages</string>
+    <string name="email">Email</string>
+    <string name="contrasenia">Password</string>
+    <string name="repite_la_contrasenia">Repeat password</string>
+    <string name="registrar">Register</string>
+    <string name="no_tienes_cuenta_crea_una_aqui">Don´t have an account? Create one here</string>
+    <string name="o_inicia_sesion_con_google">or log in with Google</string>
+    <string name="iniciar_sesi">Log in</string>
+</resources>

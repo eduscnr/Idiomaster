@@ -18,21 +18,7 @@
             android:id="@+id/constrainMundo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/napolianime">
-
-            <TextView
-                android:id="@+id/cv_txt_NombreMundo"
-                style="@style/nombre_ciudad"
-                android:layout_width="377dp"
-                android:layout_height="58dp"
-                android:background="#33000000"
-                android:gravity="center"
-                android:text="Madrid"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:background="@drawable/romaanime"/>
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

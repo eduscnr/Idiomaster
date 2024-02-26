@@ -1,8 +1,28 @@
 <resources>
     <string name="app_name">Idiomaster</string>
     <string name="title_home">Inicio</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Tablero</string>
     <string name="title_notifications">Configuración</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hola fragmento en blanco"</string>
     <string name="enunciado_primer_ejercicio">Traduce estas palabras</string>
+    <string name="Nivel_1">Nivel 1</string>
+    <string name="idioma">Español</string>
+    <string name="usuario_gmail_com">usuario@gmail.com</string>
+    <string name="guardar_cambios">Guardar cambios</string>
+    <string name="cambiar_idioma">Cambiar idioma</string>
+    <string name="si_abandonas_perderas_todo_tu_progreso_de_este_nivel">Si abandonas, perderas todo tu progreso de este nivel</string>
+    <string name="seguir_aprendiendo">Seguir aprendiendo</string>
+    <string name="salir">Salir</string>
+    <string name="continuar">Continuar</string>
+    <string name="validar">Validar</string>
+    <string name="hola">Hola</string>
+    <string name="bienvenidos_idiomaster">Bienvenidos Idiomaster</string>
+    <string name="registrate_para_aprender_nuevos_idiomas">Registrate para aprender nuevos idiomas</string>
+    <string name="email">Email</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="repite_la_contrasenia">Repite la contraseña</string>
+    <string name="registrar">Registrar</string>
+    <string name="no_tienes_cuenta_crea_una_aqui">¿No tienes cuenta? Crea una aquí</string>
+    <string name="o_inicia_sesion_con_google">o inicia sesion con Google</string>
+    <string name="iniciar_sesi">Iniciar sesión</string>
 </resources>

@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:gravity="center"
-        android:text="Si abandonas, perderas todo tu progreso de este nivel"
+        android:text="@string/si_abandonas_perderas_todo_tu_progreso_de_este_nivel"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="18dp"/>
@@ -26,14 +26,14 @@
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Seguir aprendiendo"/>
+        android:text="@string/seguir_aprendiendo"/>
 
     <Button
         android:id="@+id/btnSalir"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Salir"
+        android:text="@string/salir"
         android:textColor="@color/design_default_color_error"
         android:background="@color/transparent"/>
 

@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.R;
+import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Mundo;
 
 import java.util.List;
@@ -40,31 +41,33 @@ public class AdaptadorMundo extends RecyclerView.Adapter<AdaptadorMundo.ViewHold
     @Override
     public void onBindViewHolder(@NonNull AdaptadorMundo.ViewHolderMundo holder, int position) {
         Mundo mundo = mundos.get(position);
-        holder.nombreMundo.setText(mundo.getNombre());
+        boolean mundoDesbloqueado = IniciarSesion.getInicioSesionUsuario().getProgresoMundo() >= mundo.getId();
+        float brillo = mundoDesbloqueado ? 1.0f : 0.5f;
+        System.out.println("Me vuelvo a ejecutar :) " + mundoDesbloqueado);
         switch (mundo.getNombre()){
             case "Madrid":
                 holder.constraintLayout.setBackgroundResource(R.drawable.madridanime);
-                applyBrightness(holder.constraintLayout, 1.8f);
+                applyBrightness(holder.constraintLayout, brillo);
                 break;
             case "Barcelona":
                 holder.constraintLayout.setBackgroundResource(R.drawable.barcelonaanime);
-                applyBrightness(holder.constraintLayout, 0.9f);
+                applyBrightness(holder.constraintLayout, brillo);
                 break;
             case "London":
                 holder.constraintLayout.setBackgroundResource(R.drawable.londresanime);
-                applyBrightness(holder.constraintLayout,0.9f);
+                applyBrightness(holder.constraintLayout,brillo);
                 break;
             case "Dublin":
                 holder.constraintLayout.setBackgroundResource(R.drawable.dublinanime);
-                applyBrightness(holder.constraintLayout,0.9f);
+                applyBrightness(holder.constraintLayout,brillo);
                 break;
             case "Roma":
                 holder.constraintLayout.setBackgroundResource(R.drawable.romaanime);
-                applyBrightness(holder.constraintLayout,0.9f);
+                applyBrightness(holder.constraintLayout,brillo);
                 break;
             case "Napoli":
                 holder.constraintLayout.setBackgroundResource(R.drawable.napolianime);
-                applyBrightness(holder.constraintLayout,0.9f);
+                applyBrightness(holder.constraintLayout,brillo);
                 break;
         }
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -75,11 +78,16 @@ public class AdaptadorMundo extends RecyclerView.Adapter<AdaptadorMundo.ViewHold
             }
         });
     }
-    private void applyBrightness(View view, float intensidad) {
+    private void applyBrightness(View view, float brillo) {
         ColorMatrix matrix = new ColorMatrix();
-        matrix.setSaturation(intensidad);
+        matrix.set(new float[]{
+                brillo,   0,   0,   0,   0,
+                0, brillo,   0,   0,   0,
+                0,   0, brillo,   0,   0,
+                0,   0,   0,   1,   0
+        });
 
-        ColorFilter filter = new ColorMatrixColorFilter(matrix);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
         view.getBackground().setColorFilter(filter);
     }
 
@@ -89,12 +97,10 @@ public class AdaptadorMundo extends RecyclerView.Adapter<AdaptadorMundo.ViewHold
     }
 
     public class ViewHolderMundo extends RecyclerView.ViewHolder {
-        private TextView nombreMundo;
         private CardView cardView;
         private ConstraintLayout constraintLayout;
         public ViewHolderMundo(@NonNull View itemView) {
             super(itemView);
-            nombreMundo = itemView.findViewById(R.id.cv_txt_NombreMundo);
             cardView = itemView.findViewById(R.id.cardViewMundo);
             constraintLayout = itemView.findViewById(R.id.constrainMundo);
         }
