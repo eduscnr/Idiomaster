@@ -1,4 +1,4 @@
-package com.example.idiomaster.ui.home;
+package com.example.idiomaster.ui.inicio;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

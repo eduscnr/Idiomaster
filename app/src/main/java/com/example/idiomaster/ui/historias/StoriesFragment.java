@@ -1,4 +1,4 @@
-package com.example.idiomaster.ui.dashboard;
+package com.example.idiomaster.ui.historias;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.idiomaster.databinding.FragmentDashboardBinding;
 
-public class DashboardFragment extends Fragment {
+public class StoriesFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
 

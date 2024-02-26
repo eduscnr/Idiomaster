@@ -64,6 +64,7 @@ public class DaoImplement implements IDao{
         }
         return null;
     }*/
+    /*
     private long obtenerIdUsuario(SQLiteDatabase db, String emailUsuario) {
         Cursor cursor = db.rawQuery("SELECT id FROM Usuario WHERE email = ?", new String[]{emailUsuario});
         long idUsuario = -1;
@@ -75,7 +76,7 @@ public class DaoImplement implements IDao{
         cursor.close();
         return idUsuario;
     }
-
+*/
 
 /*    @Override
     public Usuario cambiarIdioma(String emailUsuario, String idiomaCambiar) {
