@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.R;
+import com.example.idiomaster.adaptadores.AdaptadorCuentos;
 import com.example.idiomaster.adaptadores.AdaptadorMundo;
 import com.example.idiomaster.databinding.FragmentStoriesBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
@@ -41,6 +42,9 @@ public class StoriesFragment extends Fragment {
     private RadioButton intermedio;
     private RadioButton dificil;
     private RadioGroup rdgDificultad;
+    private List<Cuento>cuentosSeleccionados = new ArrayList<>();
+    private AdaptadorCuentos adaptadorCuentos;
+    private AdaptadorCuentos.listener listener;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,16 +67,22 @@ public class StoriesFragment extends Fragment {
             dificil.setPaintFlags(0);
 
             RadioButton selectedButton =  view.findViewById((checkedId));
+            String dificultadSeleccionada = (String) selectedButton.getText();
             Log.d("Boton seleccionado:", (String) selectedButton.getText());
             if (selectedButton != null) {
-                Log.d("", "se va a pintar el boton");
+                Log.d("", "se va a pintar el boton " + selectedButton.getText());
                 selectedButton.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             }
-        });
-        intermedio.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+            intermedio.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+            //TODO OBTENER CUENTOS SELECCIONADOS
+            cuentosSeleccionados = obtenerCuentos(dificultadSeleccionada);
+            adaptadorCuentos = new AdaptadorCuentos(cuentosSeleccionados,listener);
+            rvCuentos.setAdapter(adaptadorCuentos);
 
+        });
         return root;
     }
+
 
     @Override
     public void onDestroyView() {
