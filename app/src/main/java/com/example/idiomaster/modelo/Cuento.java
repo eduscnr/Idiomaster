@@ -1,12 +1,12 @@
 package com.example.idiomaster.modelo;
 
 public class Cuento {
-    private String titulo,autor = "",narracion;
+    private String titulo,autor = "", cuento;
 
-    public Cuento(String titulo, String autor, String narracion) {
+    public Cuento(String titulo, String autor, String cuento) {
         this.titulo = titulo;
         this.autor = autor;
-        this.narracion = narracion;
+        this.cuento = cuento;
     }
     public Cuento(){
 
@@ -28,11 +28,11 @@ public class Cuento {
         this.autor = autor;
     }
 
-    public String getNarracion() {
-        return narracion;
+    public String getCuento() {
+        return cuento;
     }
 
-    public void setNarracion(String narracion) {
-        this.narracion = narracion;
+    public void setCuento(String cuento) {
+        this.cuento = cuento;
     }
 }

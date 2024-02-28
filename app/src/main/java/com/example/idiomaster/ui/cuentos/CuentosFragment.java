@@ -92,13 +92,8 @@ public class CuentosFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot d : snapshot.getChildren()) {
-                    d = d;
                     Cuento c = d.getValue(Cuento.class);
-                    String titulo = d.child("key").getValue(String.class);
-                    String contenido = d.child("value").child("cuento").getValue(String.class);
-                    String autor = d.child("autor").getValue(String.class);
-                    Cuento cuento = new Cuento(titulo,autor,contenido);
-                    cuentos.add(cuento);
+                    cuentos.add(c);
                 }
                 adaptadorCuentos = new AdaptadorCuentos(cuentos,listener);
                 rvCuentos.setAdapter(adaptadorCuentos);
