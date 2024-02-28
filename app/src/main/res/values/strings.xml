@@ -25,4 +25,6 @@
     <string name="no_tienes_cuenta_crea_una_aqui">¿No tienes cuenta? Crea una aquí</string>
     <string name="o_inicia_sesion_con_google">o inicia sesion con Google</string>
     <string name="iniciar_sesi">Iniciar sesión</string>
+    <string name="correcto">Correcto</string>
+    <string name="incorrecto">Incorrecto</string>
 </resources>

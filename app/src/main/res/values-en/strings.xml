@@ -26,4 +26,6 @@
     <string name="no_tienes_cuenta_crea_una_aqui">Don´t have an account? Create one here</string>
     <string name="o_inicia_sesion_con_google">or log in with Google</string>
     <string name="iniciar_sesi">Log in</string>
+    <string name="correcto">Correct</string>
+    <string name="incorrecto">Incorrect</string>
 </resources>

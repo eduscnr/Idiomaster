@@ -55,7 +55,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
 
         tvCorrectoInCorrecto = binding.textviewCorrectoIncorrecto;
         gridLayout = binding.gridJugar;
-        System.out.println("Niveles totales: "+ MainActivity.getMundoActual().getNiveles().size());
+        //System.out.println("Niveles totales: "+ MainActivity.getMundoActual().getNiveles().size());
         opciones = new ArrayList<>();
         binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
 
@@ -67,10 +67,8 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
         Configuration config = getResources().getConfiguration();
         Locale systemLocale = config.getLocales().get(0);
         sistemaIdioma = systemLocale.getLanguage();
-        System.out.println(sistemaIdioma);
+        //System.out.println(sistemaIdioma);
 
-        // Traducir palabra al idioma del sistema
-        //traducirTexto(binding.palabraTraducir, "es", sistemaIdioma);
         try {
             Thread.sleep(500);
             traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
@@ -197,13 +195,13 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
 
             if (respuestaSeleccionada.equalsIgnoreCase(textoTraducido)){
                 //Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show();
-                tvCorrectoInCorrecto.setText("CORRECTO");
-                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.teal_700));
+                tvCorrectoInCorrecto.setText(R.string.correcto);
+                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.azul));
                 indiceActual++;
             } else {
                 //Toast.makeText(this, "Incorrecto", Toast.LENGTH_SHORT).show();
-                tvCorrectoInCorrecto.setText("INCORRECTO");
-                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.purple_200));
+                tvCorrectoInCorrecto.setText(R.string.incorrecto);
+                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.rojo));
                 fallos++;
                 indiceActual++;
             }
