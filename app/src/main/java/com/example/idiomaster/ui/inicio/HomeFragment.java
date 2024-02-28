@@ -132,6 +132,7 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
 
     @Override
     public void onClickCardView(int posicion) {
+        //Indica el nivel seleccionado en el MainActivity
         MainActivity.setNivelSeleccionado(niveles.get(posicion));
         if(niveles.get(posicion).getId()==IniciarSesion.getInicioSesionUsuario().getProgresoNivel()){
             Intent traducePalabras = new Intent(requireContext(), TraducePalabras.class);

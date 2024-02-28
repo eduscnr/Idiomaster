@@ -1,5 +1,6 @@
 package com.example.idiomaster.ui.cuentos;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,8 @@ import com.example.idiomaster.adaptadores.AdaptadorCuentos;
 import com.example.idiomaster.databinding.FragmentStoriesBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Cuento;
+import com.example.idiomaster.registrar.MainActivity;
+import com.example.idiomaster.ui.minijuegos.TraducePalabras;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CuentosFragment extends Fragment {
+public class CuentosFragment extends Fragment implements AdaptadorCuentos.listener{
 
     private FragmentStoriesBinding binding;
     private RecyclerView rvCuentos;
@@ -50,15 +53,16 @@ public class CuentosFragment extends Fragment {
 
         binding = FragmentStoriesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        listener = this::onClickCardView;
         rvCuentos = binding.rvCuentos;
         rvCuentos.setLayoutManager(new LinearLayoutManager(requireContext()));
         rvCuentos.setHasFixedSize(true);
         facil =binding.easyButton;
         facil.setTag("facil");
         intermedio =binding.intermediateButton;
-        intermedio.setTag("intermedio");
+        intermedio.setTag("medio");
         dificil =binding.advancedButton;
-        dificil.setTag("dificil");
+        dificil.setTag("avanzado");
 
         rdgDificultad =binding.difficultyRadioGroup;
 
@@ -96,9 +100,9 @@ public class CuentosFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot d : snapshot.getChildren()) {
                     Cuento c = d.getValue(Cuento.class);
-                    cuentos.add(c);
+                    cuentosSeleccionados.add(c);
                 }
-                adaptadorCuentos = new AdaptadorCuentos(cuentos,listener);
+                adaptadorCuentos = new AdaptadorCuentos(cuentosSeleccionados,listener);
                 rvCuentos.setAdapter(adaptadorCuentos);
             }
             @Override
@@ -106,5 +110,12 @@ public class CuentosFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onClickCardView(int posicion) {
+        MainActivity.setCuentoSeleccionado(cuentosSeleccionados.get(posicion));
+        Intent leerCuento = new Intent(requireContext(), LeerCuento.class);
+        requireContext().startActivity(leerCuento);
     }
 }

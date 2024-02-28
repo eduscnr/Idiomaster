@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.example.idiomaster.databinding.ActivityMainBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.modelo.Cuento;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
 import com.example.idiomaster.repositorio.DaoImplement;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static Nivel nivelSeleccionado;
     private static String idiomaSeleccionado = IniciarSesion.getInicioSesionUsuario().getIdioma();
     private static Mundo mundoActual;
+    private static Cuento cuentoSeleccionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,5 +80,13 @@ public class MainActivity extends AppCompatActivity {
         DaoImplement dao = new DaoImplement();
         dao.actualizarProgresoFirebase(IniciarSesion.getInicioSesionUsuario().getEmail(),IniciarSesion.getInicioSesionUsuario().getIdioma(),
                 IniciarSesion.getInicioSesionUsuario().getProgresoMundo(), IniciarSesion.getInicioSesionUsuario().getProgresoNivel());
+    }
+
+    public static Cuento getCuentoSeleccionado() {
+        return cuentoSeleccionado;
+    }
+
+    public static void setCuentoSeleccionado(Cuento cuentoSeleccionado) {
+        MainActivity.cuentoSeleccionado = cuentoSeleccionado;
     }
 }
