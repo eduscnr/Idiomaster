@@ -1,7 +1,7 @@
 package com.example.idiomaster.modelo;
 
 public class Cuento {
-    private String titulo,autor,narracion;
+    private String titulo,autor = "",narracion;
 
     public Cuento(String titulo, String autor, String narracion) {
         this.titulo = titulo;
