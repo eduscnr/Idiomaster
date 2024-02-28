@@ -1,7 +1,8 @@
-package com.example.idiomaster;
+package com.example.idiomaster.registrar;
 
 import android.os.Bundle;
 
+import com.example.idiomaster.databinding.ActivityMainBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
@@ -15,7 +16,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.idiomaster.databinding.ActivityMainBinding;
+import com.example.idiomaster.R;
+import com.example.idiomaster.registrar.MainActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.menu_inicio, R.id.menu_historias, R.id.menu_configuracion)
+                R.id.navigation_home, R.id.navigation_cuentos, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DaoImplement dao = new DaoImplement(this);
+        DaoImplement dao = new DaoImplement();
         dao.actualizarProgresoFirebase(IniciarSesion.getInicioSesionUsuario().getEmail(),IniciarSesion.getInicioSesionUsuario().getIdioma(),
                 IniciarSesion.getInicioSesionUsuario().getProgresoMundo(), IniciarSesion.getInicioSesionUsuario().getProgresoNivel());
     }

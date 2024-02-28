@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/menu_historias"
-        android:name="com.example.idiomaster.ui.historias.StoriesFragment"
+        android:name="com.example.idiomaster.ui.cuentos.CuentosFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_stories" />
 

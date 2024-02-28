@@ -3,29 +3,26 @@ package com.example.idiomaster.iniciar;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.idiomaster.MainActivity;
-import com.example.idiomaster.R;
-import com.example.idiomaster.database.DatabaseSqlite;
 import com.example.idiomaster.databinding.ActivityIniciarSesionBinding;
-import com.example.idiomaster.modelo.ProgresoFireBase;
 import com.example.idiomaster.modelo.Usuario;
-import com.example.idiomaster.modelo.UsuarioFireBase;
+import com.example.idiomaster.registrar.MainActivity;
 import com.example.idiomaster.registrar.Registro;
 import com.example.idiomaster.repositorio.DaoImplement;
-import com.example.idiomaster.repositorio.IDao;
+import com.example.idiomaster.utils.InternetUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,20 +31,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class IniciarSesion extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0001;
@@ -67,13 +55,24 @@ public class IniciarSesion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityIniciarSesionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        DatabaseSqlite databaseSqlite = new DatabaseSqlite(this);
-        databaseSqlite.getReadableDatabase();
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        daoImplement = new DaoImplement(IniciarSesion.this);
-        //actualizarProgreso("idiomaster@gmail.com", "it", 2, 2);
+        daoImplement = new DaoImplement();
+        InternetUtil.isOnline(new InternetUtil.OnOnlineCheckListener() {
+            @Override
+            public void onResult(boolean isOnline) {
+                if (!isOnline) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNoInternetDialog();
+                        }
+                    });
+                }
+            }
+        });
+
         binding.iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,6 +213,18 @@ public class IniciarSesion extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private void showNoInternetDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Sin conexión a Internet")
+                .setMessage("Necesitas conectarte a Internet para usar esta aplicación.")
+                .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     public static Usuario getInicioSesionUsuario() {

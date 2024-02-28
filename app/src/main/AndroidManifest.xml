@@ -21,7 +21,7 @@
             android:name=".victoriaderrota.Victoria"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".registrar.MainActivity"
             android:exported="false" />
         <activity
             android:name=".registrar.Registro"

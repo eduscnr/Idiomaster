@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.R;
@@ -43,6 +44,8 @@ public class CuentosFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stories, container, false);
+        DashboardViewModel dashboardViewModel =
+                new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentStoriesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

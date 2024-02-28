@@ -8,6 +8,9 @@ public class Cuento {
         this.autor = autor;
         this.narracion = narracion;
     }
+    public Cuento(){
+
+    }
 
     public String getTitulo() {
         return titulo;

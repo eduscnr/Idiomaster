@@ -1,5 +1,6 @@
 package com.example.idiomaster.ui.inicio;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,21 +9,23 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.adaptadores.AdaptadorMundo;
+import com.example.idiomaster.databinding.FragmentHomeBinding;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.adaptadores.AdaptadorNivel;
-import com.example.idiomaster.databinding.FragmentHomeBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
+import com.example.idiomaster.registrar.MainActivity;
 import com.example.idiomaster.ui.minijuegos.TraducePalabras;
+import com.example.idiomaster.utils.InternetUtil;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +48,7 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("Vuelvo a cargar");
         niveles = obtenerNiveles();
         mundos = obtenerMundos();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -63,6 +67,7 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
         binding.salirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                obtenerMundos();
                 recyclerViewMundos.setVisibility(View.VISIBLE);
                 recyclerViewNiveles.setVisibility(View.INVISIBLE);
                 binding.salirButton.setVisibility(View.INVISIBLE);
@@ -152,5 +157,37 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
             Toast.makeText(requireContext(), "No tienes el mundo desbloqueado", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        InternetUtil.isOnline(new InternetUtil.OnOnlineCheckListener() {
+            @Override
+            public void onResult(boolean isOnline) {
+                if (!isOnline) {
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNoInternetDialog();
+                        }
+                    });
+                }
+            }
+        });
+        System.out.println("Soy onResume de HomeFragment");
+        super.onResume();
+    }
+
+    private void showNoInternetDialog() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Sin conexión a Internet")
+                .setMessage("Necesitas conectarte a Internet para usar esta aplicación.")
+                .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        requireActivity().finishAffinity();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

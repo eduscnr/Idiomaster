@@ -1,4 +1,4 @@
-package com.example.idiomaster.ui.historias;
+package com.example.idiomaster.ui.cuentos;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

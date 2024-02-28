@@ -1,26 +1,25 @@
 package com.example.idiomaster.ui.notifications;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.idiomaster.MainActivity;
 import com.example.idiomaster.R;
 import com.example.idiomaster.adaptadores.AdaptadorIdiomas;
 import com.example.idiomaster.databinding.FragmentNotificationsBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Usuario;
 import com.example.idiomaster.repositorio.DaoImplement;
-import com.example.idiomaster.repositorio.IDao;
+import com.example.idiomaster.utils.InternetUtil;
+
 
 public class NotificationsFragment extends Fragment implements Spinner.OnItemSelectedListener{
 
@@ -40,7 +39,7 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
         AdaptadorIdiomas adaptadorIdiomas = new AdaptadorIdiomas(requireContext(), R.layout.item_idioma, idiomas);
         spinner.setAdapter(adaptadorIdiomas);
         spinner.setOnItemSelectedListener(this);
-        doa = new DaoImplement(requireContext());
+        doa = new DaoImplement();
         binding.correoElectronico.setText(IniciarSesion.getInicioSesionUsuario().getEmail());
         binding.guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +75,36 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
                     break;
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        InternetUtil.isOnline(new InternetUtil.OnOnlineCheckListener() {
+            @Override
+            public void onResult(boolean isOnline) {
+                if (!isOnline) {
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNoInternetDialog();
+                        }
+                    });
+                }
+            }
+        });
+        super.onResume();
+    }
+    private void showNoInternetDialog() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Sin conexión a Internet")
+                .setMessage("Necesitas conectarte a Internet para usar esta aplicación.")
+                .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        requireActivity().finishAffinity();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override

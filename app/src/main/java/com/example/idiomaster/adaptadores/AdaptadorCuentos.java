@@ -1,14 +1,16 @@
 package com.example.idiomaster.adaptadores;
+
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.idiomaster.R;
 import com.example.idiomaster.modelo.Cuento;
 
@@ -34,7 +36,7 @@ public class AdaptadorCuentos extends RecyclerView.Adapter<AdaptadorCuentos.Cuen
     public CuentoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.item_storie, parent, false);
-        return new AdaptadorCuentos.CuentoViewHolder(view);
+        return new CuentoViewHolder(view);
     }
 
     @Override
