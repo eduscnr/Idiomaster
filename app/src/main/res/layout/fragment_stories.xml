@@ -11,7 +11,8 @@
         android:id="@+id/difficultyRadioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="113dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/rvCuentos"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +27,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/facil"
-            android:textColor="@color/black" />
+            style="@style/tituloCardView" />
 
         <RadioButton
             android:id="@+id/intermediateButton"
@@ -36,7 +37,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/intermedio"
-            android:textColor="@color/black" />
+            style="@style/tituloCardView" />
 
         <RadioButton
             android:id="@+id/advancedButton"
@@ -46,14 +47,13 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/dificil"
-            android:textColor="@color/black" />
+            style="@style/tituloCardView" />
     </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCuentos"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

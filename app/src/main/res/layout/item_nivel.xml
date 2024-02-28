@@ -21,7 +21,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Nivel 1"
-                style="@style/nivel"
+                style="@style/tituloCardView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -78,6 +78,7 @@ public class CuentosFragment extends Fragment implements AdaptadorCuentos.listen
                 Log.d("", "se va a pintar el boton " + selectedButton.getText());
                 selectedButton.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             }
+            cuentosSeleccionados.clear();
             ponerCuentos(dificultadSeleccionada);
 
 
