@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.R;
@@ -50,6 +51,8 @@ public class CuentosFragment extends Fragment {
         binding = FragmentStoriesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         rvCuentos = binding.rvCuentos;
+        rvCuentos.setLayoutManager(new LinearLayoutManager(requireContext()));
+        rvCuentos.setHasFixedSize(true);
         facil =binding.easyButton;
         facil.setTag("facil");
         intermedio =binding.intermediateButton;
