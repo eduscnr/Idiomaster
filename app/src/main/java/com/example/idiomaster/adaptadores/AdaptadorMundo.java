@@ -33,13 +33,13 @@ public class AdaptadorMundo extends RecyclerView.Adapter<AdaptadorMundo.ViewHold
     }
     @NonNull
     @Override
-    public AdaptadorMundo.ViewHolderMundo onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolderMundo onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.item_mundo, parent, false);
-        return new AdaptadorMundo.ViewHolderMundo(view);
+        return new ViewHolderMundo(view);
     }
     @Override
-    public void onBindViewHolder(@NonNull AdaptadorMundo.ViewHolderMundo holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderMundo holder, int position) {
         Mundo mundo = mundos.get(position);
         boolean mundoDesbloqueado = IniciarSesion.getInicioSesionUsuario().getProgresoMundo() >= mundo.getId();
         float brillo = mundoDesbloqueado ? 1.0f : 0.5f;

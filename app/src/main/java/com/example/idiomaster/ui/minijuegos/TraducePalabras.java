@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,8 +23,8 @@ import com.example.idiomaster.databinding.ActivityTraducePalabrasBinding;
 import com.example.idiomaster.dialogo.FinalizarJuego;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Usuario;
-import com.example.idiomaster.registrar.MainActivity;
-import com.example.idiomaster.repositorio.DaoImplement;
+import com.example.idiomaster.registrar.MainDrawer;
+import com.example.idiomaster.repositorio.FirebasesImple;
 import com.example.idiomaster.utils.InternetUtil;
 import com.example.idiomaster.victoriaderrota.Derrota;
 import com.example.idiomaster.victoriaderrota.Victoria;
@@ -61,13 +60,13 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
 
         tvCorrectoInCorrecto = binding.textviewCorrectoIncorrecto;
         gridLayout = binding.gridJugar;
-        System.out.println("Niveles totales: "+ MainActivity.getMundoActual().getNiveles().size());
+        System.out.println("Niveles totales: "+ MainDrawer.getMundoActual().getNiveles().size());
         opciones = new ArrayList<>();
-        binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
+        binding.palabraTraducir.setText(MainDrawer.getNivelSeleccionado().getPalabras().get(indiceActual));
 
-        int palabrasSize = MainActivity.getNivelSeleccionado().getPalabras().size();
+        int palabrasSize = MainDrawer.getNivelSeleccionado().getPalabras().size();
         for (int i = 0; i < palabrasSize; i++) {
-            opciones.add(MainActivity.getNivelSeleccionado().getPalabras().get(i));
+            opciones.add(MainDrawer.getNivelSeleccionado().getPalabras().get(i));
         }
         // Obtén el idioma del sistema
         Configuration config = getResources().getConfiguration();
@@ -77,13 +76,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
 
         // Traducir palabra al idioma del sistema
         //traducirTexto(binding.palabraTraducir, "es", sistemaIdioma);
-        try {
-            Thread.sleep(500);
-            traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
         aniadeHijos(2);
         recorrer();
 
@@ -158,7 +151,7 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
             params.setMargins(8, 8, 8, 8); // Margen izquierdo, superior, derecho e inferior
             b.setLayoutParams(params);
             b.setId(View.generateViewId());
-            if (i == indiceRespuestaCorrecta && indiceActual < MainActivity.getNivelSeleccionado().getPalabras().size()) {
+            if (i == indiceRespuestaCorrecta && indiceActual < MainDrawer.getNivelSeleccionado().getPalabras().size()) {
                 // Este es el botón que contendrá la respuesta correcta
                 b.setText(opciones.get(indiceActual));
             } else {
@@ -202,25 +195,25 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
         //Comprobarsi es correcto y si no
         if(respuestPulsada != null){
             // Obtener texto del TextView y limpiar cualquier espacio adicional
-            String textoTraducido = MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual).trim();
+            String textoTraducido = MainDrawer.getNivelSeleccionado().getPalabras().get(indiceActual).trim();
             // Limpiar cualquier espacio adicional de la respuesta seleccionada
             String respuestaSeleccionada = respuestPulsada.trim();
 
             if (respuestaSeleccionada.equalsIgnoreCase(textoTraducido)){
                 //Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show();
-                tvCorrectoInCorrecto.setText("CORRECTO");
-                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.teal_700));
+                tvCorrectoInCorrecto.setText(R.string.correcto);
+                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.azul));
                 indiceActual++;
             } else {
                 //Toast.makeText(this, "Incorrecto", Toast.LENGTH_SHORT).show();
-                tvCorrectoInCorrecto.setText("INCORRECTO");
-                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.purple_200));
+                tvCorrectoInCorrecto.setText(R.string.incorrecto);
+                tvCorrectoInCorrecto.setTextColor(ContextCompat.getColor(this, R.color.rojo));
                 fallos++;
                 indiceActual++;
             }
             //Aumentar el indice para que pase a la siguiente palabra independientemente si se equivoca o acierta
-            if (indiceActual <= MainActivity.getNivelSeleccionado().getPalabras().size() && indiceActual < MainActivity.getNivelSeleccionado().getPalabras().size()) {
-                binding.palabraTraducir.setText(MainActivity.getNivelSeleccionado().getPalabras().get(indiceActual));
+            if (indiceActual <= MainDrawer.getNivelSeleccionado().getPalabras().size() && indiceActual < MainDrawer.getNivelSeleccionado().getPalabras().size()) {
+                binding.palabraTraducir.setText(MainDrawer.getNivelSeleccionado().getPalabras().get(indiceActual));
                 traducirTexto(binding.palabraTraducir, IniciarSesion.getInicioSesionUsuario().getIdioma(), sistemaIdioma);
             } else {
                 // Toast.makeText(this, "¡Juego completado!", Toast.LENGTH_SHORT).show();
@@ -232,10 +225,10 @@ public class TraducePalabras extends AppCompatActivity implements View.OnClickLi
                     Intent victoriaIntent = new Intent(this, Victoria.class);
                     startActivity(victoriaIntent);
                     IniciarSesion.getInicioSesionUsuario().setProgresoNivel(IniciarSesion.getInicioSesionUsuario().getProgresoNivel()+1);
-                    if(MainActivity.getNivelSeleccionado().getId() == MainActivity.getMundoActual().getNiveles().get(MainActivity.getMundoActual().getNiveles().size()-1).getId()){
+                    if(MainDrawer.getNivelSeleccionado().getId() == MainDrawer.getMundoActual().getNiveles().get(MainDrawer.getMundoActual().getNiveles().size()-1).getId()){
                         IniciarSesion.getInicioSesionUsuario().setProgresoMundo(IniciarSesion.getInicioSesionUsuario().getProgresoMundo()+1);
                     }
-                    DaoImplement firebaseData = new DaoImplement();
+                    FirebasesImple firebaseData = new FirebasesImple();
                     Usuario usuario = IniciarSesion.getInicioSesionUsuario();
                     firebaseData.actualizarProgresoFirebase(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(),usuario.getProgresoNivel());
                 }

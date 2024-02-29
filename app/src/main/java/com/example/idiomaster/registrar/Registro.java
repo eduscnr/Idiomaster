@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.idiomaster.databinding.ActivityRegistroBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
-import com.example.idiomaster.repositorio.DaoImplement;
+import com.example.idiomaster.repositorio.FirebasesImple;
 import com.example.idiomaster.utils.InternetUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,7 +25,7 @@ import org.json.JSONException;
 public class Registro extends AppCompatActivity {
     private ActivityRegistroBinding binding;
     private FirebaseAuth firebaseAuth;
-    private DaoImplement daoImplement;
+    private FirebasesImple firebasesImple;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class Registro extends AppCompatActivity {
         binding = ActivityRegistroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         firebaseAuth = FirebaseAuth.getInstance();
-        daoImplement = new DaoImplement();
+        firebasesImple = new FirebasesImple();
         binding.registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +48,7 @@ public class Registro extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // El usuario se ha creado exitosamente en Firebase Authentication
                                 try {
-                                    daoImplement.registrarNuevoUsuario(ema);
+                                    firebasesImple.registrarNuevoUsuario(ema);
                                 } catch (JSONException e) {
                                     System.out.println(e.getMessage());
                                 }

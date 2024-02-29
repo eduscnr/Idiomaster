@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Idiomaster</string>
     <string name="title_home">Inicio</string>
-    <string name="title_dashboard">Tablero</string>
+    <string name="title_dashboard">Cuentos</string>
     <string name="title_notifications">Configuración</string>
     <string name="hello_blank_fragment">Hola fragmento en blanco"</string>
     <string name="enunciado_primer_ejercicio">Traduce estas palabras</string>
@@ -25,4 +26,11 @@
     <string name="no_tienes_cuenta_crea_una_aqui">¿No tienes cuenta? Crea una aquí</string>
     <string name="o_inicia_sesion_con_google">o inicia sesion con Google</string>
     <string name="iniciar_sesi">Iniciar sesión</string>
+    <string name="facil">Fácil</string>
+    <string name="intermedio">Intermedio</string>
+    <string name="dificil">Difícil</string>
+    <string name="correcto">Correcto</string>
+    <string name="incorrecto">Incorrecto</string>
+    <string name="derrota">Has perdido, la próxima vez lo conseguiras</string>
+    <string name="victoria">Enhorabuena</string>
 </resources>

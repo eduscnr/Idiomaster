@@ -23,7 +23,7 @@
             android:theme="@style/Theme.Idiomaster.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".registrar.MainActivity"
+            android:name=".registrar.MainDrawer"
             android:exported="false" />
         <activity
             android:name=".registrar.Registro"
@@ -31,6 +31,10 @@
             android:theme="@style/Theme.Idiomaster.NoActionBar" />
         <activity
             android:name=".ui.minijuegos.TraducePalabras"
+            android:exported="false"
+            android:theme="@style/Theme.Idiomaster.NoActionBar" />
+        <activity
+            android:name=".ui.cuentos.LeerCuento"
             android:exported="false"
             android:theme="@style/Theme.Idiomaster.NoActionBar" />
         <activity

@@ -1,4 +1,4 @@
-package com.example.idiomaster.ui.home;
+package com.example.idiomaster.ui.inicio;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,10 +23,9 @@ import com.example.idiomaster.adaptadores.AdaptadorNivel;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
-import com.example.idiomaster.registrar.MainActivity;
+import com.example.idiomaster.registrar.MainDrawer;
 import com.example.idiomaster.ui.minijuegos.TraducePalabras;
 import com.example.idiomaster.utils.InternetUtil;
-import com.example.idiomaster.victoriaderrota.Victoria;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements AdaptadorNivel.listener, AdaptadorMundo.listener{
+public class InicioFragment extends Fragment implements AdaptadorNivel.listener, AdaptadorMundo.listener{
     private List<Nivel> niveles;
     private List<Mundo> mundos;
     private AdaptadorNivel.listener listener;
@@ -50,8 +49,8 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         System.out.println("Vuelvo a cargar");
-        niveles = obtenerNiveles();
-        mundos = obtenerMundos();
+        obtenerMundos();
+        obtenerNiveles();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         listener = this::onClickCardView;
@@ -63,8 +62,6 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
         recyclerViewMundos = root.findViewById(R.id.recyclerViewMundos);
         recyclerViewMundos.setHasFixedSize(true);
         recyclerViewMundos.setLayoutManager(new LinearLayoutManager(requireContext()));
-        AdaptadorMundo adaptadorMundo = new AdaptadorMundo(mundos, this::onClickCardViewMundo);
-        recyclerViewMundos.setAdapter(adaptadorMundo);
         binding.salirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,8 +81,8 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
         binding = null;
     }
 
-    public List<Nivel> obtenerNiveles(){
-        List<Nivel> niveles = new ArrayList<>();
+    public void obtenerNiveles(){
+        List<Nivel> nivelesFirebase = new ArrayList<>();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("minijuegos/"+ IniciarSesion.getInicioSesionUsuario().getIdioma()+"/mundos");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,11 +91,12 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
                 for (DataSnapshot d : snapshot.getChildren()) {
                     Mundo mundo = d.getValue(Mundo.class);
                     for (Nivel n : mundo.getNiveles()){
-                        niveles.add(n);
+                        nivelesFirebase.add(n);
                     }
                 }
-                adaptadorNivel = new AdaptadorNivel(niveles, listener);
+                adaptadorNivel = new AdaptadorNivel(nivelesFirebase, listener);
                 recyclerViewNiveles.setAdapter(adaptadorNivel);
+                niveles = nivelesFirebase;
             }
 
             @Override
@@ -106,10 +104,9 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
 
             }
         });
-        return niveles;
     }
-    public List<Mundo> obtenerMundos(){
-        List<Mundo>mundos = new ArrayList<>();
+    public void obtenerMundos(){
+        List<Mundo>mundosFirebases = new ArrayList<>();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("minijuegos/"+IniciarSesion.getInicioSesionUsuario().getIdioma()+"/mundos");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -117,10 +114,11 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot d : snapshot.getChildren()) {
                     Mundo mundo = d.getValue(Mundo.class);
-                    mundos.add(mundo);
+                    mundosFirebases.add(mundo);
                 }
-                adaptadorMundo = new AdaptadorMundo(mundos, listenerMundo);
+                adaptadorMundo = new AdaptadorMundo(mundosFirebases, listenerMundo);
                 recyclerViewMundos.setAdapter(adaptadorMundo);
+                mundos = mundosFirebases;
             }
 
             @Override
@@ -128,12 +126,12 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
 
             }
         });
-        return mundos;
     }
 
     @Override
     public void onClickCardView(int posicion) {
-        MainActivity.setNivelSeleccionado(niveles.get(posicion));
+        //Indica el nivel seleccionado en el MainActivity
+        MainDrawer.setNivelSeleccionado(niveles.get(posicion));
         if(niveles.get(posicion).getId()==IniciarSesion.getInicioSesionUsuario().getProgresoNivel()){
             Intent traducePalabras = new Intent(requireContext(), TraducePalabras.class);
             requireContext().startActivity(traducePalabras);
@@ -145,7 +143,7 @@ public class HomeFragment extends Fragment implements AdaptadorNivel.listener, A
     }
     public void onClickCardViewMundo(int posicion){
         Mundo mundoSeleccionado = mundos.get(posicion);
-        MainActivity.setMundoActual(mundoSeleccionado);
+        MainDrawer.setMundoActual(mundoSeleccionado);
         if(mundoSeleccionado.getId()<= IniciarSesion.getInicioSesionUsuario().getProgresoMundo()){
             List<Nivel> nivelesDeUnMundo = mundoSeleccionado.getNiveles();
             niveles = nivelesDeUnMundo;

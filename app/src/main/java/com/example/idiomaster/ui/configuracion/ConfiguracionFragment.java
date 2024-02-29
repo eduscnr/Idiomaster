@@ -1,4 +1,4 @@
-package com.example.idiomaster.ui.notifications;
+package com.example.idiomaster.ui.configuracion;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,21 +17,19 @@ import com.example.idiomaster.adaptadores.AdaptadorIdiomas;
 import com.example.idiomaster.databinding.FragmentNotificationsBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Usuario;
-import com.example.idiomaster.repositorio.DaoImplement;
+import com.example.idiomaster.repositorio.FirebasesImple;
 import com.example.idiomaster.utils.InternetUtil;
 
 
-public class NotificationsFragment extends Fragment implements Spinner.OnItemSelectedListener{
+public class ConfiguracionFragment extends Fragment implements Spinner.OnItemSelectedListener{
 
     private FragmentNotificationsBinding binding;
     private String[] idiomas= {"Español", "Italiano", "Ingles"};
     private String idioma;
-    private DaoImplement doa;
+    private FirebasesImple doa;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        /*NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);*/
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -39,7 +37,7 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
         AdaptadorIdiomas adaptadorIdiomas = new AdaptadorIdiomas(requireContext(), R.layout.item_idioma, idiomas);
         spinner.setAdapter(adaptadorIdiomas);
         spinner.setOnItemSelectedListener(this);
-        doa = new DaoImplement();
+        doa = new FirebasesImple();
         binding.correoElectronico.setText(IniciarSesion.getInicioSesionUsuario().getEmail());
         binding.guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +45,6 @@ public class NotificationsFragment extends Fragment implements Spinner.OnItemSel
                 Usuario usuario = IniciarSesion.getInicioSesionUsuario();
                 doa.actualizarProgresoFirebase(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(), usuario.getProgresoNivel());
                 doa.cambiarIdiomaFirebase(usuario.getEmail(), idioma);
-                /*doa.actualizarProgreso(usuario.getEmail(), usuario.getIdioma(), usuario.getProgresoMundo(), usuario.getProgresoNivel());
-                IniciarSesion.setInicioSesionUsuario(doa.cambiarIdioma(IniciarSesion.getInicioSesionUsuario().getEmail(), idioma));*/
             }
         });
         return root;

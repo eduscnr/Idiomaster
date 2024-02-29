@@ -1,14 +1,19 @@
 package com.example.idiomaster.registrar;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.example.idiomaster.databinding.ActivityMainBinding;
 import com.example.idiomaster.iniciar.IniciarSesion;
+import com.example.idiomaster.modelo.Cuento;
 import com.example.idiomaster.modelo.Mundo;
 import com.example.idiomaster.modelo.Nivel;
-import com.example.idiomaster.repositorio.DaoImplement;
+import com.example.idiomaster.repositorio.FirebasesImple;
+import com.example.idiomaster.utils.InternetUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,14 +21,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.idiomaster.R;
-import com.example.idiomaster.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainDrawer extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private static Nivel nivelSeleccionado;
     private static String idiomaSeleccionado = IniciarSesion.getInicioSesionUsuario().getIdioma();
     private static Mundo mundoActual;
+    private static Cuento cuentoSeleccionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.menu_inicio, R.id.menu_historias, R.id.menu_configuracion)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setNivelSeleccionado(Nivel nivelSeleccionado) {
-        MainActivity.nivelSeleccionado = nivelSeleccionado;
+        MainDrawer.nivelSeleccionado = nivelSeleccionado;
     }
 
     public static String getIdiomaSeleccionado() {
@@ -60,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setIdiomaSeleccionado(String idiomaSeleccionado) {
-        MainActivity.idiomaSeleccionado = idiomaSeleccionado;
+        MainDrawer.idiomaSeleccionado = idiomaSeleccionado;
     }
 
     public static Mundo getMundoActual() {
@@ -68,14 +73,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setMundoActual(Mundo mundoActual) {
-        MainActivity.mundoActual = mundoActual;
+        MainDrawer.mundoActual = mundoActual;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DaoImplement dao = new DaoImplement();
+        FirebasesImple dao = new FirebasesImple();
         dao.actualizarProgresoFirebase(IniciarSesion.getInicioSesionUsuario().getEmail(),IniciarSesion.getInicioSesionUsuario().getIdioma(),
                 IniciarSesion.getInicioSesionUsuario().getProgresoMundo(), IniciarSesion.getInicioSesionUsuario().getProgresoNivel());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        InternetUtil.isOnline(new InternetUtil.OnOnlineCheckListener() {
+            @Override
+            public void onResult(boolean isOnline) {
+                if (!isOnline) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNoInternetDialog();
+                        }
+                    });
+                }
+            }
+        });
+    }
+    private void showNoInternetDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Sin conexión a Internet")
+                .setMessage("Necesitas conectarte a Internet para usar esta aplicación.")
+                .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+
+    public static Cuento getCuentoSeleccionado() {
+        return cuentoSeleccionado;
+    }
+
+    public static void setCuentoSeleccionado(Cuento cuentoSeleccionado) {
+        MainDrawer.cuentoSeleccionado = cuentoSeleccionado;
     }
 }

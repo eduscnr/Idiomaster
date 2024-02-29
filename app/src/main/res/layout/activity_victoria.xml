@@ -8,13 +8,11 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
-        android:layout_width="318dp"
-        android:layout_height="521dp"
+        android:layout_width="291dp"
+        android:layout_height="421dp"
         android:layout_marginStart="85dp"
-        android:layout_marginTop="103dp"
+        android:layout_marginTop="116dp"
         android:layout_marginEnd="85dp"
-        android:layout_marginBottom="195dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +34,20 @@
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/animationView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/tituloCardView"
+        android:layout_width="156dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="@string/victoria"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

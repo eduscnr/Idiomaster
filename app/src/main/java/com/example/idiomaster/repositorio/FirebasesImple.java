@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DaoImplement {
-    public DaoImplement() {
+public class FirebasesImple {
+    public FirebasesImple() {
     }
 
     //USO DE FIREBASES

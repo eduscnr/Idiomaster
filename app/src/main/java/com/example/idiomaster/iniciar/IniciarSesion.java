@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import com.example.idiomaster.databinding.ActivityIniciarSesionBinding;
 import com.example.idiomaster.modelo.Usuario;
-import com.example.idiomaster.registrar.MainActivity;
+import com.example.idiomaster.registrar.MainDrawer;
 import com.example.idiomaster.registrar.Registro;
-import com.example.idiomaster.repositorio.DaoImplement;
+import com.example.idiomaster.repositorio.FirebasesImple;
 import com.example.idiomaster.utils.InternetUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -48,7 +48,7 @@ public class IniciarSesion extends AppCompatActivity {
             .requestIdToken("232536227001-8vodv266emdtju434ksdpqhs2gj8eldu.apps.googleusercontent.com")
             .requestEmail()
             .build();
-    private DaoImplement daoImplement;
+    private FirebasesImple firebasesImple;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,20 +58,7 @@ public class IniciarSesion extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        daoImplement = new DaoImplement();
-        InternetUtil.isOnline(new InternetUtil.OnOnlineCheckListener() {
-            @Override
-            public void onResult(boolean isOnline) {
-                if (!isOnline) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showNoInternetDialog();
-                        }
-                    });
-                }
-            }
-        });
+        firebasesImple = new FirebasesImple();
 
         binding.iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +76,7 @@ public class IniciarSesion extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             try {
-                                               daoImplement.recuperarUsuario(email);
+                                               firebasesImple.recuperarUsuario(email);
                                                 // Espera 2 segundos
                                                 Thread.sleep(2000);
                                             } catch (InterruptedException e) {
@@ -97,21 +84,13 @@ public class IniciarSesion extends AppCompatActivity {
                                             }
                                             System.out.println("Usuario que se quiere logear: " + inicioSesionUsuario);
                                             // Luego de esperar 2 segundos, ejecuta el código
-                                            Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
+                                            Intent intent = new Intent(IniciarSesion.this, MainDrawer.class);
                                             startActivity(intent);
                                             finish();
                                         }
                                     });
 
                                     hilo.start();
-                                    /*if (daoImplement.buscarUsuario(email)) {
-                                        inicioSesionUsuario = daoImplement.recuperarUsuario(email);
-                                        Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish(); // Esto evita que el usuario regrese a la pantalla de inicio de sesión presionando el botón "Atrás"
-                                    } else {
-                                        Toast.makeText(IniciarSesion.this, "El usuario existe pero no en la base de datos, lo siento", Toast.LENGTH_SHORT).show();
-                                    }*/
                                 } else {
                                     // Error al iniciar sesión
                                     Toast.makeText(IniciarSesion.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
@@ -152,19 +131,19 @@ public class IniciarSesion extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            daoImplement.recuperarUsuario(account.getEmail());
+                            firebasesImple.recuperarUsuario(account.getEmail());
                             // Espera 2 segundos
                             Thread.sleep(2000);
                             if(inicioSesionUsuario != null){
-                                Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
+                                Intent intent = new Intent(IniciarSesion.this, MainDrawer.class);
                                 startActivity(intent);
                                 finish();
                             }else{
-                                daoImplement.registrarNuevoUsuario(account.getEmail());
-                                daoImplement.recuperarUsuario(account.getEmail());
+                                firebasesImple.registrarNuevoUsuario(account.getEmail());
+                                firebasesImple.recuperarUsuario(account.getEmail());
                                 Thread.sleep(2000);
                                 System.out.println(inicioSesionUsuario);
-                                Intent intent = new Intent(IniciarSesion.this, MainActivity.class);
+                                Intent intent = new Intent(IniciarSesion.this, MainDrawer.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -173,19 +152,11 @@ public class IniciarSesion extends AppCompatActivity {
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        //Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                         firebaseAuthWithGoogle(account.getIdToken());
                     }
                 });
 
                 hilo.start();
-                /*if (daoImplement.buscarUsuario(account.getEmail())) {
-                    inicioSesionUsuario = daoImplement.iniciarSesionUsuario(account.getEmail());
-                } else {
-                    Toast.makeText(IniciarSesion.this, "Vas a perder todo el progreso de la cuenta si tenias una", Toast.LENGTH_SHORT).show();
-                    daoImplement.registrarUsuario(account.getEmail());
-                    inicioSesionUsuario = daoImplement.iniciarSesionUsuario(account.getEmail());
-                }*/
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 //Log.w(TAG, "Google sign in failed", e);
@@ -225,6 +196,25 @@ public class IniciarSesion extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        InternetUtil.isOnline(new InternetUtil.OnOnlineCheckListener() {
+            @Override
+            public void onResult(boolean isOnline) {
+                if (!isOnline) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNoInternetDialog();
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
     public static Usuario getInicioSesionUsuario() {
