@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.idiomaster.databinding.ActivityLeerCuentoBinding;
 import com.example.idiomaster.modelo.Cuento;
@@ -35,6 +36,7 @@ public class LeerCuento extends AppCompatActivity implements View.OnClickListene
         txtTitulo.setText(cuento.getTitulo());
         txtAutor.setText(cuento.getAutor());
         txtCuento.setText(cuento.getCuento());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
     }
 }

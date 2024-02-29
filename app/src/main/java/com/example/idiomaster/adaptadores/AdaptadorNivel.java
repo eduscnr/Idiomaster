@@ -1,6 +1,8 @@
 package com.example.idiomaster.adaptadores;
 
 import android.content.Context;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiomaster.R;
+import com.example.idiomaster.iniciar.IniciarSesion;
 import com.example.idiomaster.modelo.Nivel;
 
 import java.util.List;
@@ -40,6 +43,8 @@ public class AdaptadorNivel extends RecyclerView.Adapter<AdaptadorNivel.ViewHold
     public void onBindViewHolder(@NonNull ViewHolderNivel holder, int position) {
         Nivel nivel = nivels.get(position);
         holder.nombreNivel.setText(nivel.getNombre());
+        boolean nivelBloqueado = IniciarSesion.getInicioSesionUsuario().getProgresoNivel() >= nivel.getId();
+        float brillo = nivelBloqueado ? 1.0f : 0.5f;
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +52,19 @@ public class AdaptadorNivel extends RecyclerView.Adapter<AdaptadorNivel.ViewHold
                 listener.onClickCardView(posicion);
             }
         });
+        applyBrightness(holder.cardView, brillo);
+    }
+    private void applyBrightness(View view, float brillo) {
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.set(new float[]{
+                brillo,   0,   0,   0,   0,
+                0, brillo,   0,   0,   0,
+                0,   0, brillo,   0,   0,
+                0,   0,   0,   1,   0
+        });
+
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        view.getBackground().setColorFilter(filter);
     }
 
     @Override

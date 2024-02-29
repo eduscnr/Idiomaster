@@ -3,6 +3,7 @@ package com.example.idiomaster.registrar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +34,7 @@ public class Registro extends AppCompatActivity {
         binding = ActivityRegistroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         firebaseAuth = FirebaseAuth.getInstance();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         firebasesImple = new FirebasesImple();
         binding.registrar.setOnClickListener(new View.OnClickListener() {
             @Override

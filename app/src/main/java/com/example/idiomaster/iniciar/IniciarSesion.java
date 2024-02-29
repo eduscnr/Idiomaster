@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,6 +60,7 @@ public class IniciarSesion extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         firebasesImple = new FirebasesImple();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         binding.iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override

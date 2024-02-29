@@ -66,6 +66,7 @@ public class InicioFragment extends Fragment implements AdaptadorNivel.listener,
             @Override
             public void onClick(View view) {
                 obtenerMundos();
+                obtenerNiveles();
                 recyclerViewMundos.setVisibility(View.VISIBLE);
                 recyclerViewNiveles.setVisibility(View.INVISIBLE);
                 binding.salirButton.setVisibility(View.INVISIBLE);
@@ -173,7 +174,10 @@ public class InicioFragment extends Fragment implements AdaptadorNivel.listener,
                 }
             }
         });
-        System.out.println("Soy onResume de HomeFragment");
+        if(adaptadorNivel != null){
+            adaptadorNivel = new AdaptadorNivel(niveles, listener);
+            recyclerViewNiveles.setAdapter(adaptadorNivel);
+        }
         super.onResume();
     }
 

@@ -1,6 +1,7 @@
 package com.example.idiomaster.victoriaderrota;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ public class Derrota extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDerrotaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         binding.volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
